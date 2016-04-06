@@ -4,6 +4,7 @@
   "description": "A technical interviewing portal",
   "private": true,
   "scripts": {
+    "watch-css": "stylus public/stylesheets/index.styl -o public/stylesheets -w",
     "start": "node ./bin/www"
   },
   "dependencies": {
