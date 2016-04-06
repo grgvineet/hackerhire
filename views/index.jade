@@ -3,7 +3,7 @@ doctype html
 html
   head
     link(rel='stylesheet',href='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css')
-    link(rel='stylesheet',href='/stylesheets/index.css')
+    link(rel='stylesheet',href='/css/index.css')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js')
     title HackerHire
   body
@@ -15,39 +15,47 @@ html
         h2 HackerHire
         p Helping you hire the best talent.
 
-      section#preview
+      section#preview.outer-section
         img(src='/images/product_preview.png')
 
-      section#why
+
+      section#why.outer-section
         div.section-header
           h2 Why HackerHire?
+        hr
         div.row
-          div.col.s18.m3
-            div.card.blue-grey
+          div.col.s18.m4
+            div.card.grey.darken-4
               div.card-content.white-text
-                span.card-title Test Card
-                p This is a simple card
+                span.card-title Efficient
+                p Waste less money, filter deserving candidates early in the process.
+              div.card-action
+                a(href='#') LEARN MORE
+          div.col.s18.m4
+            div.card.grey.darken-3
+              div.card-content.white-text
+                span.card-title Easy
+                p Single click room setup.
+              div.card-action
+                a(href='#') LEARN MORE
+          div.col.s18.m4
+            div.card.grey.darken-4
+              div.card-content.white-text
+                span.card-title Fraud Detection
+                p Advanced anti-plagiarism and cheating mechanisms.
+              div.card-action
+                a(href='#') LEARN MORE
 
 
-        div.reason
-          h3 Efficient
-          p Waste less money, filter out the candidates early.
-        div.reason
-          h3 Easy
-          p Single Click Room Setup.
-        div.reason
-          h3 Fraud Detection
-          p Advanced anti-plagiarism and cheating detection.
-        div.reason
-          h3 Analytics
-          p Customized Reports to help you hire only the best.
 
-
-      section#clients
+      section#clients.outer-section
         div.section-header
-          h2 Our past clients love us!
-          img(src='/images/clients_preview.png')
+          h2 Our clients love us!
+        hr
+        img(src='/images/clients_preview.png')
 
 
-    footer
-      span Copyright &copy; 2016
+    footer.page-footer.grey.darken-4
+      div.footer-copyright  
+        div.container.white-text
+          span Copyright &copy; 2016
