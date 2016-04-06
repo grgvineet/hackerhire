@@ -4,12 +4,91 @@ html
   head
     link(rel='stylesheet',href='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css')
     link(rel='stylesheet',href='/stylesheets/index.css')
+    link(rel='stylesheet',href='/stylesheets/modal.css')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js')
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js')
+    script(src='/scripts/script_1.js')
     title HackerHire
   body
-    section#signup
-      a.waves-effect.waves-light.btn-large LOGIN
-      a.waves-effect.waves-light.btn-large SIGNUP
+    section#signup.main-nav
+        ul
+          li
+            a.cd-signin(href='#0')
+          li
+            a.cd-signup(href='#0')
+
+
+    div.cd-user-modal
+      // this is the entire modal form, including the background
+      div.cd-user-modal-container
+        // this is the container wrapper
+        ul.cd-switcher
+          li
+            a(href='#0') Sign in
+          li
+            a(href='#0') New account
+        div#cd-login
+          // log in form
+          form.cd-form
+            p.fieldset
+              label.image-replace.cd-email(for='signin-email') E-mail
+              input#signin-email.full-width.has-padding.has-border(type='email', placeholder='E-mail')
+              span.cd-error-message Error message here!
+            p.fieldset
+              label.image-replace.cd-password(for='signin-password') Password
+              input#signin-password.full-width.has-padding.has-border(type='text', placeholder='Password')
+              a.hide-password(href='#0') Hide
+              span.cd-error-message Error message here!
+            p.fieldset
+              input#remember-me(type='checkbox', checked='')
+              label(for='remember-me') Remember me
+            p.fieldset
+              input.full-width(type='submit', value='Login')
+          p.cd-form-bottom-message
+            a(href='#0') Forgot your password?
+          // <a href="#0" class="cd-close-form">Close</a>
+        // cd-login
+        div#cd-signup
+          // sign up form
+          form.cd-form
+            p.fieldset
+              label.image-replace.cd-username(for='signup-username') Username
+              input#signup-username.full-width.has-padding.has-border(type='text', placeholder='Username')
+              span.cd-error-message Error message here!
+            p.fieldset
+              label.image-replace.cd-email(for='signup-email') E-mail
+              input#signup-email.full-width.has-padding.has-border(type='email', placeholder='E-mail')
+              span.cd-error-message Error message here!
+            p.fieldset
+              label.image-replace.cd-password(for='signup-password') Password
+              input#signup-password.full-width.has-padding.has-border(type='text', placeholder='Password')
+              a.hide-password(href='#0') Hide
+              span.cd-error-message Error message here!
+            p.fieldset
+              input#accept-terms(type='checkbox')
+              label(for='accept-terms')
+                | I agree to the 
+                a(href='#0') Terms
+            p.fieldset
+              input.full-width.has-padding(type='submit', value='Create account')
+          // <a href="#0" class="cd-close-form">Close</a>
+        // cd-signup
+        div#cd-reset-password
+          // reset password form
+          p.cd-form-message
+            | Lost your password? Please enter your email address. You will receive a link to create a new password.
+          form.cd-form
+            p.fieldset
+              label.image-replace.cd-email(for='reset-email') E-mail
+              input#reset-email.full-width.has-padding.has-border(type='email', placeholder='E-mail')
+              span.cd-error-message Error message here!
+            p.fieldset
+              input.full-width.has-padding(type='submit', value='Reset password')
+          p.cd-form-bottom-message
+            a(href='#0') Back to log-in
+        // cd-reset-password
+        a.cd-close-form(href='#0') Close
+
     div.container
       header
         h2 HackerHire
@@ -22,6 +101,7 @@ html
       section#why.outer-section
         div.section-header
           h2 Why HackerHire?
+
         hr
         div.row
           div.col.s18.m4
