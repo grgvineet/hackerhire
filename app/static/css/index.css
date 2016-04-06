@@ -1,0 +1,21 @@
+@import url("https://fonts.googleapis.com/css?family=Source+Code+Pro:400,200,700");
+header {
+  text-align: center;
+}
+header h2 {
+  font-family: 'Source Code Pro';
+  font-weight: bold;
+}
+header p {
+  font-style: italic;
+  font-size: 2em;
+}
+#signup {
+  text-align: right;
+}
+#signup a {
+  margin: 1em;
+}
+#preview img {
+  width: 100%;
+}
