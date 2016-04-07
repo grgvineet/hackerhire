@@ -19,14 +19,8 @@ header p {
 }
 #signup {
   text-align: right;
-}
-#signup a {
-  margin: 1em;
-  color: #333;
-}
-#signup li {
-  color: #333;
-  background: #333;
+a
+li
 }
 #preview img {
   width: 100%;

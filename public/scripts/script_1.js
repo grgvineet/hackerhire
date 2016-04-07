@@ -94,6 +94,7 @@ jQuery(document).ready(function($){
 	formLogin.find('input[type="submit"]').on('click', function(event){
 		// event.preventDefault();
 		// formLogin.find('input[type="email"]').toggleClass('has-error').next('span').toggleClass('is-visible');
+		console.log("Pushed");
 	});
 	formSignup.find('input[type="submit"]').on('click', function(event){
 		// event.preventDefault();
