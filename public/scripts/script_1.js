@@ -178,3 +178,19 @@ function signup_submit_click() {
 		}
 	});
 }
+
+function reset_password_submit_click() {
+	data = { "email" : $("#reset-email").val() };
+	// alert(JSON.stringify(data));
+	$.ajax({url: "reset",
+		data: data,
+		method : "post",
+		success: function(result){
+			if (result.status === true) {
+				window.location.href = 'https://' + window.location.host + '/reset/' + result.token;
+			} else {
+				alert(result.message);
+			}
+		}
+	});
+}

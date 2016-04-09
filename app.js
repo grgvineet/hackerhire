@@ -15,6 +15,7 @@ var users = require('./routes/users');
 var room = require('./routes/room');
 var login = require('./routes/login');
 var logout = require('./routes/logout');
+var reset = require('./routes/reset');
 var dashboard = require('./routes/dashboard');
 var signup = require('./routes/signup');
 
@@ -63,6 +64,7 @@ app.use('/room', room);
 app.use('/login', login);
 app.use('/logout', logout);
 app.use('/signup', signup);
+app.use('/reset', reset);
 app.use('/dashboard', dashboard);
 app.use('/peer', require('peer').ExpressPeerServer(server, {debug: true}));
 

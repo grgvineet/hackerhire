@@ -4,7 +4,7 @@ var router = express.Router();
 
 router.get('/', function(req, res) {
     // render the page and pass in any flash data if it exists
-    res.redirect('/', { message: req.flash('signupMessage') });
+    res.redirect('/');
 });
 
 router.post('/', function(req, res, next) {
