@@ -146,3 +146,35 @@ jQuery.fn.putCursorAtEnd = function() {
     	}
 	});
 };
+
+function login_submit_click() {
+	data = { "signin-email" : $("#signin-email").val(), "signin-password" : $("#signin-password").val(), "signin-remember" : $("#remember-me").is(":checked")};
+	// alert(JSON.stringify(data));
+	$.ajax({url: "login",
+		data: data,
+		method : "post",
+		success: function(result){
+			if (result.status === true) {
+				window.location.href = "/dashboard";
+			} else {
+				alert(result.message);
+			}
+		}
+	});
+}
+
+function signup_submit_click() {
+	data = { "signup-email" : $("#signup-email").val(), "signup-password" : $("#signup-password").val()};
+	// alert(JSON.stringify(data));
+	$.ajax({url: "signup",
+		data: data,
+		method : "post",
+		success: function(result){
+			if (result.status === true) {
+				window.location.href = "/dashboard";
+			} else {
+				alert(result.message);
+			}
+		}
+	});
+}

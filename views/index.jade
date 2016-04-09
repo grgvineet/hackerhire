@@ -31,7 +31,9 @@ html
             a(href='#0') New account
         div#cd-login
           // log in form
-          form.cd-form
+          form.cd-form()
+            p.fieldset
+              span.cd-error-message Error message here
             p.fieldset
               label.image-replace.cd-email(for='signin-email') E-mail
               input#signin-email.full-width.has-padding.has-border(type='email', placeholder='E-mail')
@@ -42,28 +44,28 @@ html
               a.hide-password(href='#0') Hide
               span.cd-error-message Error message here!
             p.fieldset
-              input#remember-me(type='checkbox', checked='')
+              input#remember-me(type='checkbox', checked=false)
               label(for='remember-me') Remember me
             p.fieldset
-              input.full-width(type='submit', value='Login')
+              input.full-width(type='button', value='Login', name='Submit', onclick='login_submit_click()')
           p.cd-form-bottom-message
             a(href='#0') Forgot your password?
           // <a href="#0" class="cd-close-form">Close</a>
         // cd-login
         div#cd-signup
           // sign up form
-          form.cd-form
+          form.cd-form(method="post", action="signup")
             p.fieldset
               label.image-replace.cd-username(for='signup-username') Username
-              input#signup-username.full-width.has-padding.has-border(type='text', placeholder='Username')
+              input#signup-username.full-width.has-padding.has-border(type='text', placeholder='Username', name="signup-username")
               span.cd-error-message Error message here!
             p.fieldset
               label.image-replace.cd-email(for='signup-email') E-mail
-              input#signup-email.full-width.has-padding.has-border(type='email', placeholder='E-mail')
+              input#signup-email.full-width.has-padding.has-border(type='email', placeholder='E-mail', name="signup-email")
               span.cd-error-message Error message here!
             p.fieldset
               label.image-replace.cd-password(for='signup-password') Password
-              input#signup-password.full-width.has-padding.has-border(type='text', placeholder='Password')
+              input#signup-password.full-width.has-padding.has-border(type='text', placeholder='Password', name="signup-password")
               a.hide-password(href='#0') Hide
               span.cd-error-message Error message here!
             p.fieldset
@@ -72,7 +74,7 @@ html
                 | I agree to the 
                 a(href='#0') Terms
             p.fieldset
-              input.full-width.has-padding(type='submit', value='Create account')
+              input.full-width.has-padding(type='button', value='Create account', onclick='signup_submit_click()')
           // <a href="#0" class="cd-close-form">Close</a>
         // cd-signup
         div#cd-reset-password
@@ -141,3 +143,17 @@ html
       div.footer-copyright  
         div.container.white-text
           span Copyright &copy; 2016
+
+  script.
+    function eventFire(el, etype) {
+      if (el.fireEvent) {
+        el.fireEvent('on' + etype);
+      } else {
+        var evObj = document.createEvent('Events');
+        evObj.initEvent(etype, true, false);
+        el.dispatchEvent(evObj);
+      }
+    }
+    eventFire(document.getElementsByClassName("cd-login"), 'click');
+    document.getElementsByClassName('cd-login').click();
+    $('.cd-login').click();

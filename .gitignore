@@ -127,4 +127,8 @@ xcuserdata/
 *.xccheckout
 *.xcscmblueprint
 
+
+# Private configuration files which should not be leaked
+private/database/config.js
+
 # Created by .ignore support plugin (hsz.mobi)

@@ -30,6 +30,13 @@ server.on('error', onError);
 server.on('listening', onListening);
 
 /**
+ * Create PeerJS server
+ */
+app.use('/peer', require('peer').ExpressPeerServer(server, {
+    debug: true
+}));
+
+/**
  * Normalize a port into a number, string, or false.
  */
 

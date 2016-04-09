@@ -3,7 +3,9 @@ var router = express.Router();
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+  // Temporary end point for logout, needs to be deleted
+  req.logOut();
+  res.redirect('/');
 });
 
 module.exports = router;

@@ -4,12 +4,31 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var session = require('express-session');
+var fs = require('fs');
+var https = require('https');
+var passport = require('passport'); module.exports.passport = passport;
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
-var room = require('./routes/room')
+var room = require('./routes/room');
+var login = require('./routes/login');
+var dashboard = require('./routes/dashboard');
+var signup = require('./routes/signup');
 
 var app = express();
+
+/**
+ * Prettifies the html page generated, remove in production
+ */
+app.locals.pretty = true;
+
+var privateKey = fs.readFileSync('./private/ssl/key.pem').toString();
+var certificate = fs.readFileSync('./private/ssl/cert.pem').toString();
+
+var options = { key : privateKey, cert : certificate, passphrase: "hackerhire"};
+var server = https.createServer(options, app);
+server.listen(3000);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -21,12 +40,26 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(session({
+    secret: 'spidermonkey',
+    resave: true,
+    saveUninitialized: true
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(require('stylus').middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
+
+require('./private/auth/passport-local')(passport);
 
 app.use('/', routes);
 app.use('/users', users);
 app.use('/room', room);
+app.use('/login', login);
+app.use('/signup', signup);
+app.use('/dashboard', dashboard);
+app.use('/peer', require('peer').ExpressPeerServer(server, {debug: true}));
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -81,3 +114,4 @@ app.use(function (req, res, next) {
 
 
 module.exports = app;
+console.log("App started");
