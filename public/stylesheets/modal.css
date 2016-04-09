@@ -294,7 +294,7 @@ xsigin/signup popup
   /* space left for the HIDE button */
   padding-right: 65px;
 }
-.cd-form input[type=submit] {
+.cd-form input[type=button] {
   padding: 16px 0;
   cursor: pointer;
   background: #2f889a;
@@ -307,7 +307,7 @@ xsigin/signup popup
   -o-appearance: none;
   appearance: none;
 }
-.no-touch .cd-form input[type=submit]:hover, .no-touch .cd-form input[type=submit]:focus {
+.no-touch .cd-form input[type=button]:hover, .no-touch .cd-form input[type=button]:focus {
   background: #3599ae;
   outline: none;
 }
@@ -384,7 +384,7 @@ xsigin/signup popup
   .cd-form input.has-padding {
     padding: 16px 12px 16px 5px;
   }
-  .cd-form input[type=submit] {
+  .cd-form input[type=button] {
     padding: 16px 0;
   }
 }

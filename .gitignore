@@ -130,5 +130,6 @@ xcuserdata/
 
 # Private configuration files which should not be leaked
 private/database/config.js
+views/*.html
 
 # Created by .ignore support plugin (hsz.mobi)
