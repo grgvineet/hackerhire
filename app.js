@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
+var MySqlStore = require('express-mysql-session');
 var fs = require('fs');
 var https = require('https');
 var passport = require('passport'); module.exports.passport = passport;
@@ -30,6 +31,8 @@ var options = { key : privateKey, cert : certificate, passphrase: "hackerhire"};
 var server = https.createServer(options, app);
 server.listen(3000);
 
+var sessionStore = new MySqlStore(require('./private/database/config').sessionStoreOptions);
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -42,6 +45,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(session({
     secret: 'spidermonkey',
+    store : sessionStore,
     resave: true,
     saveUninitialized: true
 }));
