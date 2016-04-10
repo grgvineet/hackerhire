@@ -1,0 +1,57 @@
+doctype html
+html(lang='en')
+  head
+    title  Compiler 
+    meta(charset='utf-8')
+    style(type='text/css').
+      .iobox
+      {
+      width: 50%;
+      height: 30%;
+      border:2px solid #000000;
+      }
+      .myeditor
+      {
+      width: 70%;
+      }
+      #status
+      {
+      width: 15%;
+      height: 6%;
+      border:2px solid #000000;
+      line-height: 200%;
+      text-align: center;
+      }
+    script(src='/scripts/compiler.js')
+    script(src='/scripts/jquery-2.2.1.min.js')
+    script(src='/codemirror-5.12/lib/codemirror.js')
+    script(src='/codemirror-5.12/mode/javascript/javascript.js')
+    script(src='/codemirror-5.12/mode/clike/clike.js')
+    script(src='/codemirror-5.12/addon/mode/loadmode.js')
+    script(src='/codemirror-5.12/mode/meta.js')
+    link(rel='stylesheet', href='/codemirror-5.12/doc/docs.css')
+    link(rel='stylesheet', href='/codemirror-5.12/lib/codemirror.css')
+    link(rel='stylesheet', href='/codemirror-5.12/theme/monokai.css')
+  body(onload='Controller.init();')
+    form.myeditor
+      textarea#codeEditor
+      br
+      textarea#inputbox.iobox  input 
+      br
+      select#languageMenu(onchange='Controller.changeMode()')
+        option(value='0')  Text
+        option(value='1')  C 
+        option(value='2')  C++ 
+        option(value='3')  Java 
+        option(value='5')  Python 2 
+        option(value='6')  Perl 
+        option(value='7')  PHP 
+        option(value='8')  Ruby 
+        option(value='9')  C# 
+        option(value='20')  Javascript 
+      br
+      button#compileButton(type='button', onclick='Controller.runCode()') Run
+      br
+      textarea#statusbox(readonly='') Status
+      br
+      textarea#outputbox.iobox(readonly='')  output

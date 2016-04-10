@@ -18,6 +18,8 @@ var logout = require('./routes/logout');
 var reset = require('./routes/reset');
 var dashboard = require('./routes/dashboard');
 var signup = require('./routes/signup');
+var compiler = require('./routes/compiler');
+var hackerrank = require('./routes/hackerrank');
 
 var app = express();
 
@@ -66,6 +68,8 @@ app.use('/logout', logout);
 app.use('/signup', signup);
 app.use('/reset', reset);
 app.use('/dashboard', dashboard);
+app.use('/compiler', compiler);
+app.use('/hackerrank' , hackerrank);
 app.use('/peer', require('peer').ExpressPeerServer(server, {debug: true}));
 
 
