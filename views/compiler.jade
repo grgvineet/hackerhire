@@ -23,15 +23,14 @@ html(lang='en')
       text-align: center;
       }
     script(src='/scripts/compiler.js')
-    script(src='/scripts/jquery-2.2.1.min.js')
-    script(src='/codemirror-5.12/lib/codemirror.js')
-    script(src='/codemirror-5.12/mode/javascript/javascript.js')
-    script(src='/codemirror-5.12/mode/clike/clike.js')
-    script(src='/codemirror-5.12/addon/mode/loadmode.js')
-    script(src='/codemirror-5.12/mode/meta.js')
-    link(rel='stylesheet', href='/codemirror-5.12/doc/docs.css')
-    link(rel='stylesheet', href='/codemirror-5.12/lib/codemirror.css')
-    link(rel='stylesheet', href='/codemirror-5.12/theme/monokai.css')
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/codemirror.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/mode/javascript/javascript.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/mode/clike/clike.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/addon/mode/loadmode.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/mode/meta.js')
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/codemirror.css')
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/theme/monokai.css')
   body(onload='Controller.init();')
     form.myeditor
       textarea#codeEditor
