@@ -3,19 +3,31 @@ var passport = require('../app').passport;
 var mysql = require('mysql');
 var bcrypt = require('bcrypt-nodejs');
 var crypto = require('crypto');
+var mailer = require('nodemailer');
 var dbconfig = require('../private/database/config');
 var connection = mysql.createConnection(dbconfig.connection);
 
 var router = express.Router();
+
+var transporter = mailer.createTransport('smtps://noreply.hackerhire%40gmail.com:hackerhirenoreply123@smtp.gmail.com');
 
 connection.query('USE ' + dbconfig.database);
 
 /* GET home page. */
 router.get('/:token', function(req, res, next) {
     // Received when url opened from email
+    var token = req.params.token;
+    connection.query("SELECT * FROM reset WHERE token = ?",[token], function(err, rows) {
+        if (err) {
+            return res.redirect('/'); // Internal server error
 
-    // Show password input form
-    res.render('reset')
+        }
+        if (rows.length === 0) {
+            return res.redirect('/'); // Token expired, used or does not exist
+
+        }
+        return res.render('reset')
+    });
 });
 
 router.post('/:token', function(req, res, next) {
@@ -28,12 +40,12 @@ router.post('/:token', function(req, res, next) {
     // TODO : Email should be an input field so that any can't try for random tokens and change password
     connection.query("SELECT * FROM reset WHERE token = ?",[token], function(err, rows){
         if (err) {
-            res.redirect('/'); // Internal server error
-            return;
+            return res.redirect('/'); // Internal server error
+            
         }
         if (rows.length === 0) {
-            res.redirect('/'); // Token expired, used or does not exist
-            return;
+            return res.redirect('/'); // Token expired, used or does not exist
+            
         }
 
         var email = rows[0].email;
@@ -43,12 +55,12 @@ router.post('/:token', function(req, res, next) {
         connection.query("UPDATE users SET password=? WHERE email=?;", [bcrypt.hashSync(password, null, null), email], function (err, rows) {
             console.log(rows.affectedRows);
             if (err) {
-                res.redirect('/'); // Internal server error
-                return;
+                return res.redirect('/'); // Internal server error
+                
             }
             if (!rows.affectedRows) {
-                res.redirect('/'); // Cannot update, some error
-                return;
+                return res.redirect('/'); // Internal server error
+                
             }
 
             // Delete token from table
@@ -70,8 +82,8 @@ router.post('/:token', function(req, res, next) {
                         req.session.cookie.expires = false;
                     }
                 }
-                res.redirect('/dashboard');
-                return;
+                return res.redirect('/dashboard');
+                
             })(req, res, next);
         });
     });
@@ -79,7 +91,7 @@ router.post('/:token', function(req, res, next) {
 
 router.get('/', function(req, res, next) {
     // Should not be received
-    res.redirect('/');
+    return res.redirect('/');
 });
 
 router.post('/', function(req, res, next) {
@@ -89,21 +101,37 @@ router.post('/', function(req, res, next) {
     // Load database
     connection.query("SELECT * from users where email=?", [email], function (err, rows) {
         if (err) {
-            res.json({ status : false, message : "Internal Server error"}); return;
+            return res.json({ status : false, message : "Internal Server error"});
         } else if (!rows.length) {
-            res.json({ status : false, message : "No account with given email"}); return;
+            return res.json({ status : false, message : "No account with given email"});
         }
 
         // Email found in database
-        // TODO : Create random token
         var token = crypto.randomBytes(20).toString('hex');
-        connection.query("Insert into reset (email, token) values (?, ?)", [email, token], function (err, rows) {
+        connection.query("replace into reset (email, token) values (?, ?)", [email, token], function (err, rows) {
             if (err) {
-                // TODO : If email exist in reset, update token
                 console.log(JSON.stringify(err));
-                res.json({ status : false, message : "Error : probably request for reset already submit"}); return;
+                return res.json({ status : false, message : "Internal Server Error"});
             }
-            res.json({ status : true, token : token}); return; // TODO : Remove token
+
+            // Send email with link
+            var mailOptions = {
+                from: '"Hackerhire " <noreply.hackerhire@gmail.com>', // sender address
+                to: email, // list of receivers
+                subject: 'Password reset', // Subject line
+                text: 'There was recently a request to change the password on your account. Follow this link https://hackerhire.in:3000/reset/' + token + ' to reset your password. ' +
+                'If it is not you, ignore this mail.', // plaintext body
+            };
+
+            transporter.sendMail(mailOptions, function(error, info){
+                if(error){
+                    console.log(error);
+                    return res.json({ status : false, message : "Error sending mail"});
+                }
+                console.log('Message sent: ' + info.response);
+                return res.json({ status : true, message : "Mail successfully sent on email id"});
+            });
+
         });
     });
     

@@ -187,7 +187,7 @@ function reset_password_submit_click() {
 		method : "post",
 		success: function(result){
 			if (result.status === true) {
-				window.location.href = 'https://' + window.location.host + '/reset/' + result.token;
+				alert(result.message);
 			} else {
 				alert(result.message);
 			}

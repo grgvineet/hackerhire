@@ -5,8 +5,8 @@ html
     link(rel='stylesheet',href='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css')
     link(rel='stylesheet',href='/stylesheets/index.css')
     link(rel='stylesheet',href='/stylesheets/modal.css')
-    script(src='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js')
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js')
     script(src='/scripts/script_1.js')
     title HackerHire
   body
@@ -143,17 +143,3 @@ html
       div.footer-copyright  
         div.container.white-text
           span Copyright &copy; 2016
-
-  script.
-    function eventFire(el, etype) {
-      if (el.fireEvent) {
-        el.fireEvent('on' + etype);
-      } else {
-        var evObj = document.createEvent('Events');
-        evObj.initEvent(etype, true, false);
-        el.dispatchEvent(evObj);
-      }
-    }
-    eventFire(document.getElementsByClassName("cd-login"), 'click');
-    document.getElementsByClassName('cd-login').click();
-    $('.cd-login').click();
