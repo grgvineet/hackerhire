@@ -4,6 +4,7 @@ var mysql = require('mysql');
 var bcrypt = require('bcrypt-nodejs');
 var crypto = require('crypto');
 var mailer = require('nodemailer');
+var validator = require('validator');
 var dbconfig = require('../private/database/config');
 var connection = mysql.createConnection(dbconfig.connection);
 
@@ -101,8 +102,7 @@ router.get('/', function(req, res, next) {
 
 router.post('/', function(req, res, next) {
     // Receives an ajax query to reset password, reply with status true or false that whether email id exist or not
-    var email = req.body.email;
-    
+    var email = req.body['reset-email'];
     // Input validation
     if (typeof email === 'undefined' || validator.isNull(email)) return res.json( { status : false, message : "Email field is empty" });
     else if (!validator.isEmail(email)) return res.json( { status : false, message : "Invalid Email" });
@@ -112,7 +112,7 @@ router.post('/', function(req, res, next) {
         if (err) {
             return res.json({ status : false, message : "Internal Server error"});
         } else if (!rows.length) {
-            return res.json({ status : false, message : "No account with given email"});
+            return res.json({ status : false, message : "No account exist with given email id"});
         }
 
         // Email found in database
@@ -123,13 +123,18 @@ router.post('/', function(req, res, next) {
                 return res.json({ status : false, message : "Internal Server Error"});
             }
 
+            // Set time out to delete this token after 1 hour
+            setTimeout(function () {
+                connection.query("DELETE FROM reset where email=? AND token=?", [email, token], function (err, rows) {});
+            }, 60*60*1000);
+
             // Send email with link
             var mailOptions = {
                 from: '"Hackerhire " <noreply.hackerhire@gmail.com>', // sender address
                 to: email, // list of receivers
                 subject: 'Password reset', // Subject line
                 text: 'There was recently a request to change the password on your account. Follow this link https://hackerhire.in:3000/reset/' + token + ' to reset your password. ' +
-                'If it is not you, ignore this mail.', // plaintext body
+                'If it is not you, ignore this mail.\n\nHackerhire Team' // plaintext body
             };
 
             transporter.sendMail(mailOptions, function(error, info){

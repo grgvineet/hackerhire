@@ -187,16 +187,23 @@ function signup_submit_click() {
 }
 
 function reset_password_submit_click() {
-	data = { "email" : $("#reset-email").val() };
+	data = { "reset-email" : $("#reset-email").val() };
 	// alert(JSON.stringify(data));
 	$.ajax({url: "reset",
 		data: data,
 		method : "post",
 		success: function(result){
 			if (result.status === true) {
-				alert(result.message);
+				$('.cd-user-modal').removeClass('is-visible');
+				swal("", "A mail has been sent to requested email id. Please visit the link provided in mail to reset your password", "success");
 			} else {
-				alert(result.message);
+				swal({
+					title : "Error",
+					text : result.message,
+					type : "error",
+					showConfirmButton : false,
+					timer : 2500
+				})
 			}
 		}
 	});
