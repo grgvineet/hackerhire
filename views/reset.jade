@@ -4,6 +4,9 @@ html
     body
         form(method='post')
             //- Not settting action, cause it to use same url
-            input(type='text', name='password')
+            label(for='cd-reset-password') Password
+            input#cd-reset-password(type='password', name='reset-password')
+            label(for='cd-reset-confirm-password') Confirm Password
+            input#cd-reset-confirm-password(type='password', name='reset-confirm-password')
             input(type='submit', name='submit', value='Submit')
 

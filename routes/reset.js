@@ -13,7 +13,6 @@ var transporter = mailer.createTransport('smtps://noreply.hackerhire%40gmail.com
 
 connection.query('USE ' + dbconfig.database);
 
-/* GET home page. */
 router.get('/:token', function(req, res, next) {
     // Received when url opened from email
     var token = req.params.token;
@@ -49,7 +48,13 @@ router.post('/:token', function(req, res, next) {
         }
 
         var email = rows[0].email;
-        var password = req.body.password;
+
+        // Input validation
+        if (typeof req.body['reset-password'] === 'undefined' || validator.isNull(req.body['reset-password'])) return res.redirect(req.get('referer')); //res.json( { status : false, message : "Password field is empty" });
+        else if (req.body['reset-confirm-password'] === 'undefined' || validator.isNull(req.body['reset-confirm-password'])) return res.redirect(req.get('referer')); //res.json( { status : false, message : "Confirm password is empty" });
+        else if (!validator.equals(req.body['reset-password'], req.body['singup-confirm-password'] )) return res.redirect(req.get('referer')); //res.json( { status : false, message : "Passwords don't match" });
+
+        var password = req.body['reset-password'];
 
         // Updating password
         connection.query("UPDATE users SET password=? WHERE email=?;", [bcrypt.hashSync(password, null, null), email], function (err, rows) {
@@ -97,6 +102,10 @@ router.get('/', function(req, res, next) {
 router.post('/', function(req, res, next) {
     // Receives an ajax query to reset password, reply with status true or false that whether email id exist or not
     var email = req.body.email;
+    
+    // Input validation
+    if (typeof email === 'undefined' || validator.isNull(email)) return res.json( { status : false, message : "Email field is empty" });
+    else if (!validator.isEmail(email)) return res.json( { status : false, message : "Invalid Email" });
 
     // Load database
     connection.query("SELECT * from users where email=?", [email], function (err, rows) {

@@ -148,7 +148,9 @@ jQuery.fn.putCursorAtEnd = function() {
 };
 
 function login_submit_click() {
-	data = { "signin-email" : $("#signin-email").val(), "signin-password" : $("#signin-password").val(), "signin-remember" : $("#remember-me").is(":checked")};
+	data = { "signin-email" : $("#signin-email").val(),
+		"signin-password" : $("#signin-password").val(),
+		"signin-remember" : $("#remember-me").is(":checked")};
 	// alert(JSON.stringify(data));
 	$.ajax({url: "login",
 		data: data,
@@ -164,14 +166,19 @@ function login_submit_click() {
 }
 
 function signup_submit_click() {
-	data = { "signup-email" : $("#signup-email").val(), "signup-password" : $("#signup-password").val()};
+	data = {  "signup-username" : $("#signup-username").val(),
+		"signup-email" : $("#signup-email").val(),
+		"signup-password" : $("#signup-password").val(),
+		"signup-confirm-password" : $("#signup-confirm-password").val()};
 	// alert(JSON.stringify(data));
 	$.ajax({url: "signup",
 		data: data,
 		method : "post",
 		success: function(result){
 			if (result.status === true) {
-				window.location.href = "/dashboard";
+				// window.location.href = "/dashboard";
+				$('.cd-user-modal').removeClass('is-visible');
+				swal("Good job!", "You clicked the button!", "success");
 			} else {
 				alert(result.message);
 			}

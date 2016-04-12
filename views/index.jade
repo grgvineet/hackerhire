@@ -40,8 +40,8 @@ html
               span.cd-error-message Error message here!
             p.fieldset
               label.image-replace.cd-password(for='signin-password') Password
-              input#signin-password.full-width.has-padding.has-border(type='text', placeholder='Password')
-              a.hide-password(href='#0') Hide
+              input#signin-password.full-width.has-padding.has-border(type='password', placeholder='Password')
+              a.hide-password(href='#0') Show
               span.cd-error-message Error message here!
             p.fieldset
               input#remember-me(type='checkbox', checked=false)
@@ -54,7 +54,7 @@ html
         // cd-login
         div#cd-signup
           // sign up form
-          form.cd-form(method="post", action="signup")
+          form.cd-form()
             p.fieldset
               label.image-replace.cd-username(for='signup-username') Username
               input#signup-username.full-width.has-padding.has-border(type='text', placeholder='Username', name="signup-username")
@@ -65,8 +65,13 @@ html
               span.cd-error-message Error message here!
             p.fieldset
               label.image-replace.cd-password(for='signup-password') Password
-              input#signup-password.full-width.has-padding.has-border(type='text', placeholder='Password', name="signup-password")
-              a.hide-password(href='#0') Hide
+              input#signup-password.full-width.has-padding.has-border(type='password', placeholder='Password', name="signup-password")
+              a.hide-password(href='#0') Show
+              span.cd-error-message Error message here!
+            p.fieldset
+              label.image-replace.cd-password(for='signup-confirm-password') Confirm Password
+              input#signup-confirm-password.full-width.has-padding.has-border(type='password', placeholder='Password', name="signup-confirm-password")
+              a.hide-password(href='#0') Show
               span.cd-error-message Error message here!
             p.fieldset
               input#accept-terms(type='checkbox')
