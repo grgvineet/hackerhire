@@ -1,1 +1,55 @@
 @import url("https://fonts.googleapis.com/css?family=Source+Code+Pro:400,200,700");
+html,
+body {
+  height: 100%;
+}
+nav {
+  margin-bottom: 0;
+}
+.brand-logo {
+  font-family: 'Source Code Pro';
+  margin-left: 0.25em;
+}
+.outer-container {
+  height: 95%;
+  bottom: 0;
+  background-color: #00f;
+}
+.inner-container {
+  bottom: 0;
+  height: 100%;
+}
+#left-col {
+  background-color: #efefef;
+}
+#left-col #main-title {
+  font-family: 'Source Code Pro';
+  font-weight: bold;
+}
+#mid-col {
+  background-color: #333;
+}
+#right-col {
+  background-color: #efefef;
+}
+#chatter {
+  width: 100%;
+}
+#video-container {
+  margin-top: 1em;
+  width: 100%;
+  position: relative;
+  clear: both;
+}
+#video-container #their-video {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  background-color: #999;
+}
+#video-container #my-video {
+  position: absolute;
+  top: 0;
+  width: 25%;
+  background-color: #999;
+}

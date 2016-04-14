@@ -8,10 +8,59 @@ dark-grey = #333
 grey = #555
 light-grey = #999
 lightest-grey = #efefef
+full-white = #ffffff
 
 // Typography
 main-coding = 'Source Code Pro'
 main-serif = ''
 
+html, body
+	height 100%
+	
+nav
+	margin-bottom 0
 
+.brand-logo
+	font-family main-coding
+	margin-left 0.25em
 
+.outer-container
+	height 95%
+	bottom 0
+	background-color blue
+
+.inner-container
+	bottom 0
+	height 100%
+
+#left-col
+	background-color lightest-grey
+	#main-title
+		font-family main-coding
+		font-weight bold
+	
+#mid-col
+	background-color dark-grey
+	
+#right-col
+	background-color lightest-grey
+
+#chatter
+	width 100%
+
+#video-container
+	margin-top 1em
+	width 100%
+	position relative
+	clear both
+	#their-video
+		position absolute
+		width 100%
+		top 0
+		background-color light-grey
+	#my-video
+		position absolute
+		top 0
+		width 25%
+		background-color light-grey
+	
