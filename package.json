@@ -4,7 +4,7 @@
   "description": "A technical interviewing portal",
   "private": true,
   "scripts": {
-    "watch-css": "stylus public/stylesheets/index.styl -o public/stylesheets -w",
+    "watch-css": "stylus -w public/stylesheets/",
     "start": "node ./bin/www"
   },
   "dependencies": {
@@ -26,6 +26,7 @@
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "peer": "^0.2.8",
+    "request": "^2.71.0",
     "serve-favicon": "~2.3.0",
     "stylus": "0.42.3",
     "validator": "^5.2.0"

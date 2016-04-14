@@ -13,6 +13,7 @@ var passport = require('passport'); module.exports.passport = passport;
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var room = require('./routes/room');
+var room2 = require('./routes/room2');
 var login = require('./routes/login');
 var logout = require('./routes/logout');
 var reset = require('./routes/reset');
@@ -91,6 +92,7 @@ app.use('/dashboard', dashboard);
 app.use('/compiler', compiler);
 app.use('/hackerrank' , hackerrank);
 app.use('/peer', require('peer').ExpressPeerServer(server, {debug: true}));
+app.use('/room2',room2)
 
 
 // catch 404 and forward to error handler
