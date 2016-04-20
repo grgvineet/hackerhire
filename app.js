@@ -9,6 +9,7 @@ var MySqlStore = require('express-mysql-session');
 var fs = require('fs');
 var https = require('https');
 var passport = require('passport'); module.exports.passport = passport;
+var flash = require('express-flash');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -56,6 +57,7 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
 app.use(require('stylus').middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 

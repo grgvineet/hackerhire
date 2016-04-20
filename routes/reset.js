@@ -19,14 +19,23 @@ router.get('/:token', function(req, res, next) {
     var token = req.params.token;
     connection.query("SELECT * FROM reset WHERE token = ?",[token], function(err, rows) {
         if (err) {
-            return res.redirect('/'); // Internal server error
+            req.flash('error', 'Internal server error');
+            return res.redirect(req.get('referer')); // Internal server error
 
         }
         if (rows.length === 0) {
+            req.flash('error', 'Reset token does not exist. Either it is expired or used. Try clicking forgot password again');
             return res.redirect('/'); // Token expired, used or does not exist
 
         }
-        return res.render('reset')
+        
+        // Not considering any success message here
+        if (messages.error) {
+            return res.render('reset', { message : req.flash('error') });
+        } else {
+            return res.render('reset');
+        }
+
     });
 });
 
@@ -40,10 +49,12 @@ router.post('/:token', function(req, res, next) {
     // TODO : Email should be an input field so that any can't try for random tokens and change password
     connection.query("SELECT * FROM reset WHERE token = ?",[token], function(err, rows){
         if (err) {
-            return res.redirect('/'); // Internal server error
+            req.flash('error', 'Internal server error');
+            return res.redirect(req.get('referer')); // Internal server error
             
         }
         if (rows.length === 0) {
+            req.flash('error', 'Reset token does not exist. Either it is expired or used. Try clicking forgot password again');
             return res.redirect('/'); // Token expired, used or does not exist
             
         }
@@ -51,9 +62,18 @@ router.post('/:token', function(req, res, next) {
         var email = rows[0].email;
 
         // Input validation
-        if (typeof req.body['reset-password'] === 'undefined' || validator.isNull(req.body['reset-password'])) return res.redirect(req.get('referer')); //res.json( { status : false, message : "Password field is empty" });
-        else if (req.body['reset-confirm-password'] === 'undefined' || validator.isNull(req.body['reset-confirm-password'])) return res.redirect(req.get('referer')); //res.json( { status : false, message : "Confirm password is empty" });
-        else if (!validator.equals(req.body['reset-password'], req.body['singup-confirm-password'] )) return res.redirect(req.get('referer')); //res.json( { status : false, message : "Passwords don't match" });
+        if (typeof req.body['reset-password'] === 'undefined' || validator.isNull(req.body['reset-password'])) {
+            req.flash('error', 'Password field is empty');
+            return res.redirect(req.get('referer'));
+        }
+        else if (req.body['reset-confirm-password'] === 'undefined' || validator.isNull(req.body['reset-confirm-password'])) {
+            req.flash('error', 'Confirm password field is empty');
+            return res.redirect(req.get('referer'));
+        }
+        else if (!validator.equals(req.body['reset-password'], req.body['reset-confirm-password'] )) {
+            req.flash('error', 'Passwords do not match');
+            return res.redirect(req.get('referer'));
+        }
 
         var password = req.body['reset-password'];
 
@@ -61,11 +81,13 @@ router.post('/:token', function(req, res, next) {
         connection.query("UPDATE users SET password=? WHERE email=?;", [bcrypt.hashSync(password, null, null), email], function (err, rows) {
             console.log(rows.affectedRows);
             if (err) {
-                return res.redirect('/'); // Internal server error
+                req.flash('error', 'Internal server error');
+                return res.redirect(req.get('referer')); // Internal server error
                 
             }
             if (!rows.affectedRows) {
-                return res.redirect('/'); // Internal server error
+                req.flash('error', 'Internal server error');
+                return res.redirect(req.get('referer')); // Internal server error
                 
             }
 
@@ -88,6 +110,7 @@ router.post('/:token', function(req, res, next) {
                         req.session.cookie.expires = false;
                     }
                 }
+                req.flash('success', 'Password changed successfully');
                 return res.redirect('/dashboard');
                 
             })(req, res, next);
