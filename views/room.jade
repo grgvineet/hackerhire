@@ -7,6 +7,8 @@ html
         link(rel='stylesheet',href='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css')
         link(rel='stylesheet',href='/stylesheets/room.css')
         link(rel='stylesheet',href="https://fonts.googleapis.com/icon?family=Material+Icons")
+        link(rel='stylesheet', href='/stylesheets/jquery-ui-1.8.2.custom.css', type='text/css', media='screen')
+        link(type='text/css', href='/stylesheets/jquery.ui.chatbox.css', rel='stylesheet')
 
         script(type="text/javascript", src="https://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js")
         script(type="text/javascript", src="https://cdnjs.cloudflare.com/ajax/libs/peerjs/0.3.14/peer.js")
@@ -20,10 +22,17 @@ html
         script(src='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/mode/clike/clike.js')
         script(src='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/addon/mode/loadmode.js')
         script(src='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/mode/meta.js')
+        script(src='https://code.jquery.com/ui/1.10.4/jquery-ui.js', integrity='sha256-tp8VZ4Y9dg702r7D6ynzSavKSwB9zjariSZ4Snurvmw=', crossorigin='anonymous')
+        script(type='text/javascript', src='/scripts/jquery.ui.chatbox.js')
+
+        script(type='text/javascript').
+            function initRoom(){
+            compilerController.init();
+            }
         
 
 
-    body(onload='Controller.init();')
+    body(onload='initRoom();')
         nav
             div.nav-wrapper.light-blue.accent-4
                 a.brand-logo(href='#') HackerHire
@@ -49,7 +58,7 @@ html
 
                 div#codepanel
                     span.input-field.col.s6 
-                        select#languageMenu(onchange='Controller.changeMode()')
+                        select#languageMenu(onchange='compilerController.changeMode()')
                             option(value='1')  C 
                             option(value='2',selected)  C++ 
                             option(value='3')  Java 
@@ -61,7 +70,7 @@ html
                             option(value='20')  Javascript 
                             label Materialize Select
                     span.input-field.col.s6.right-align
-                        button.waves-effect.light-blue.accent-4.btn#compileButton(type='button', onclick='Controller.runCode()') RUN >
+                        button.waves-effect.light-blue.accent-4.btn#compileButton(type='button', onclick='compilerController.runCode()') RUN >
 
 
             section#mid-col.col.s6.inner-container
@@ -96,6 +105,8 @@ html
                                 span#their-id ...
                             p
                                 a.pure-button.pure-button-error#end-call(href="#") End call
+
+                div#chat_div
 
 
 

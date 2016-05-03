@@ -1,4 +1,4 @@
-var Model = {
+var compilerModel = {
 	sub_url : null,
 	init : function(){
 		this.sub_url = window.location.protocol + "//" + window.location.host;
@@ -8,7 +8,7 @@ var Model = {
 	}
 };
 
-var Controller = {
+var compilerController = {
 	langList : {
 			"0" : [ "Text" , "text/plain"],
 			"1" : [ "C" , "text/x-csrc"] ,
@@ -22,31 +22,33 @@ var Controller = {
 			"20" : [ "Javascript" , "text/javascript"]
 		}, 
 	init : function(){
-		Model.init();
-		View.init();
+		compilerModel.init();
+		compilerView.init();
 		this.addListeners();
 	},
 	runCode : function(endpoint){
-		var code = View.getContent();
-		var input = View.getInput();
-		var lang = View.getLanguage();
-		var sub_url = Model.getSubUrl() + '/hackerrank'; 
+		var code = compilerView.getContent();
+		var input = compilerView.getInput();
+		var lang = compilerView.getLanguage();
+		var sub_url = compilerModel.getSubUrl() + '/hackerrank'; 
 		var myData = {
 		    'source': code,
 		    'lang': lang,
 		    'testcases': JSON.stringify([input]),
 		};
-		//console.log(myData);
 		
-		View.setStatus("Running");
-		var str = '\n\n' + View.getOutput();
-		View.setOutput(str);
+		var str = " --- Running --- \n";
+		compilerView.setOutput(str);
+		//console.log(myData);
+
+		//var str = '\n\n' + compilerView.getOutput();
+		//compilerView.setOutput(str);
 		$.post({
 			url : sub_url ,
 			dataType: "json",
 			data :  JSON.stringify(myData, null, '\t'),
 			contentType: 'application/json;charset=UTF-8',
-			success: function(data){ Controller.parseResponse(data);} 
+			success: function(data){ compilerController.parseResponse(data);} 
 		});
 	},
 	addListeners : function(){
@@ -63,29 +65,29 @@ var Controller = {
 		
 		if(compileMssg.length > 0)
 		{
-			View.setStatus("Compilation error");
-			var str = 'Compilation error ' + '\n\n' + View.getOutput();
-			View.setOutput(str);
+			compilerView.setStatus("Compilation error");
+			var str = 'Compilation error ' + '\n\n';
+			compilerView.setOutput(str);
 		}
 		else
 		{
 			var statusMssg = response['result']['message'];
 			var output = response['result']['stdout'][0];
-			var str = output + View.getOutput();
-			View.setOutput(str);
-			View.setStatus(statusMssg);
+			var str = " --- " + statusMssg + " ---\n" + output ;
+			compilerView.setOutput(str);
+			//compilerView.setStatus(statusMssg);
 			//console.log(statusMssg.length);
 			//console.log(output.length);
 		}
 	},
 	changeMode : function(){
-		var value = View.getLanguage();
+		var value = compilerView.getLanguage();
 		var modetype = this.langList[value][1];
-		View.setMode(modetype);
+		compilerView.setMode(modetype);
 	}
 };
 
-var View = {
+var compilerView = {
 	myCodeMirror : null,
 	init : function(){
 		this.myCodeMirror = CodeMirror.fromTextArea(document.getElementById("codeEditor"), {
@@ -112,6 +114,7 @@ var View = {
 		$("#codeEditor").val(content);
 	},
 	setOutput : function(output){
+		//console.log(output);
 		$("#outputbox").val(output);
 	},
 	setStatus : function(status){
