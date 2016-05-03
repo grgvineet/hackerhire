@@ -11,9 +11,8 @@ nav {
   margin-left: 0.25em;
 }
 .outer-container {
-  height: 95%;
+  height: 88%;
   bottom: 0;
-  background-color: #00f;
 }
 .inner-container {
   bottom: 0;
@@ -27,7 +26,32 @@ nav {
   font-weight: bold;
 }
 #mid-col {
-  background-color: #333;
+  padding: 0;
+}
+#swapperDiv {
+  width: 100%;
+  background-color: #272822;
+}
+#swapButton {
+  margin: 0.5em;
+}
+#codepanel {
+  line-height: 2em;
+}
+#codepanel select {
+  display: inline;
+  margin: 0;
+  padding: 0;
+}
+#codeEditor {
+  display: block;
+}
+.CodeMirror {
+  height: 85vh;
+}
+.iobox {
+  background-color: #efefef;
+  color: #111;
 }
 #right-col {
   background-color: #efefef;

@@ -77,7 +77,6 @@ var Controller = {
 			//console.log(statusMssg.length);
 			//console.log(output.length);
 		}
-		alert('compilation finished');
 	},
 	changeMode : function(){
 		var value = View.getLanguage();

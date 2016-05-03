@@ -2,15 +2,28 @@ doctype html
 html
     head
         title Hackerhire
-        //- link(rel='stylesheet',href='http://yui.yahooapis.com/pure/0.6.0/pure-min.css')
+        link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/codemirror.css')
+        link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/theme/monokai.css')
         link(rel='stylesheet',href='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css')
         link(rel='stylesheet',href='/stylesheets/room.css')
+        link(rel='stylesheet',href="https://fonts.googleapis.com/icon?family=Material+Icons")
+
         script(type="text/javascript", src="https://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js")
         script(type="text/javascript", src="https://cdnjs.cloudflare.com/ajax/libs/peerjs/0.3.14/peer.js")
         script(src='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js')
         script(type="text/javascript", src="/scripts/call_script.js")
+        script(src='/scripts/compiler.js')
+        script(src='/scripts/swapper.js')
+        script(src='https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js')
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/codemirror.js')
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/mode/javascript/javascript.js')
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/mode/clike/clike.js')
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/addon/mode/loadmode.js')
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/mode/meta.js')
+        
 
-    body
+
+    body(onload='Controller.init();')
         nav
             div.nav-wrapper.light-blue.accent-4
                 a.brand-logo(href='#') HackerHire
@@ -22,23 +35,50 @@ html
                     li
                         a#username(href='#') sidharth &#x25BC;
                 
+
         div.row.outer-container
             section#left-col.col.s3.inner-container
                 div.question-container
-                    h5 QUESTION
-                    hr
                     p.
                         Given a sorted list with an unsorted number ee in the rightmost cell, can you write some simple code to insert ee into the array so that it remains sorted?
                     p.
                         Print the array every time a value is shifted in the array until the array is fully sorted. The goal of this challenge is to follow the correct order of insertion sort.
+                textarea#inputbox.iobox(placeholder='Input')
+                textarea#outputbox.iobox(readonly='',placeholder='output')
 
 
-            section#mid-col.col.s6.inner-container HI
+                div#codepanel
+                    span.input-field.col.s6 
+                        select#languageMenu(onchange='Controller.changeMode()')
+                            option(value='1')  C 
+                            option(value='2',selected)  C++ 
+                            option(value='3')  Java 
+                            option(value='5')  Python 2 
+                            option(value='6')  Perl 
+                            option(value='7')  PHP 
+                            option(value='8')  Ruby 
+                            option(value='9')  C# 
+                            option(value='20')  Javascript 
+                            label Materialize Select
+                    span.input-field.col.s6.right-align
+                        button.waves-effect.light-blue.accent-4.btn#compileButton(type='button', onclick='Controller.runCode()') RUN >
+
+
+            section#mid-col.col.s6.inner-container
+                div#swapperDiv.right-align
+                    button#swapButton.waves-effect.light-blue.accent-4.btn.material-icons aspect_ratio
+
+                form.myeditor#codeboard
+                    textarea#codeEditor 
+
+
             section#right-col.col.s3.inner-container
                 div#chatter
                     div.row#video-container
                         video#their-video(autoplay=true)
                         video#my-video(autoplay=true, muted=true)
+
+
                     div.row#steps
                         div#step1
                             p Please click allow on top of the screen so we can access your webcam and microphone for calls
