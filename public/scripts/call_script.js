@@ -68,12 +68,14 @@ function step1() {
     // console.log($('#video-container').css("height")});
     $('#steps').css({"margin-top":$('#their-video').height()});
 }
+
 function step2() {
     console.log($('#video-container').height());
     $('#step1, #step3').hide();
     $('#step2').show();
     console.log($('#video-container').height());
 }
+
 function step3(call) {
     console.log($('#video-container').height());
     // Hang up on an existing call if present
@@ -190,74 +192,75 @@ function chat(text){
 
 //// initialise canvas
 // Create the canvas (Neccessary for IE because it doesn't know what a canvas element is)
-/*
-var canvasWidth = 590 , canvasHeight = 320;
-var canvasDiv = document.getElementById('canvasDiv');
-var canvas = document.createElement('canvas');
+var canvasWidth = 590 , canvasHeight = 320 , canvasDiv , canvas , context;
 
-canvas.setAttribute('width', canvasWidth);
-canvas.setAttribute('height', canvasHeight);
-canvas.setAttribute('id', 'canvas');
-canvas.setAttribute('style' , 'border:1px solid #000000;');
-canvasDiv.appendChild(canvas);
+function initCanvas(){
+    canvasDiv = document.getElementById('canvasDiv');
+    canvas = document.createElement('canvas');
 
-if(typeof G_vmlCanvasManager != 'undefined') {
-   canvas = G_vmlCanvasManager.initElement(canvas);
+    canvas.setAttribute('width', canvasWidth);
+    canvas.setAttribute('height', canvasHeight);
+    canvas.setAttribute('id', 'canvas');
+    canvas.setAttribute('style' , 'border:1px solid #000000;');
+    canvasDiv.appendChild(canvas);
+    if(typeof G_vmlCanvasManager != 'undefined') {
+       canvas = G_vmlCanvasManager.initElement(canvas);
+    }
+    context = canvas.getContext("2d"); 
+
+    $('#canvas').mousedown(function(e){
+       mouseDown(e.pageX - $('#canvasDiv').offset().left , e.pageY - $('#canvasDiv').offset().top);
+    });
+
+    $('#canvas').mousemove(function(e){
+       mouseMove(e.pageX - $('#canvasDiv').offset().left , e.pageY - $('#canvasDiv').offset().top);   
+    });
+
+    $('#canvas').mouseup(function(e){
+       mouseMove(e.pageX - $('#canvasDiv').offset().left , e.pageY - $('#canvasDiv').offset().top);
+       downflag = false;
+       sendData(movesArray.toString());
+       movesArray = [];
+    });
+
+    $('#canvas').mouseleave(function(e){
+       mouseMove(e.pageX - $('#canvasDiv').offset().left , e.pageY - $('#canvasDiv').offset().top);
+       if (downflag)
+       {
+          sendData(movesArray.toString());
+          movesArray = [];
+       }
+       downflag = false;
+    });
+
+    $('#canvas').mouseenter(function(e){
+       prevx = e.pageX - $('#canvasDiv').offset().left;
+       prevy = e.pageY - $('#canvasDiv').offset().top;
+    });
+
+    $('#clearBoard').click(function(){
+       var data = {};
+       data["type"] = "clear";
+       var myaray = [];
+       myaray.push(JSON.stringify(data));
+       //console.log(JSON.stringify(data));
+       clearCanvas();
+       sendData(myaray); 
+    });
+
+    $('#setModeDraw').click(function(){
+       mode = 'draw';
+    });
+
+    $('#setModeErase').click(function(){
+       mode = 'erase';
+    });
 }
-var context = canvas.getContext("2d"); 
 // Grab the 2d canvas context
 // Note: The above code is a workaround for IE 8 and lower. Otherwise we could have used:
 //     context = document.getElementById('canvas').getContext("2d");
 //print("leaving view");
 var downflag = null , prevx = null, prevy = null, erasewidth = 15 , eraseheight = 30 , mode = 'draw';
-
-$('#canvas').mousedown(function(e){
-   mouseDown(e.pageX - $('#canvasDiv').offset().left , e.pageY - $('#canvasDiv').offset().top);
-});
-
-$('#canvas').mousemove(function(e){
-   mouseMove(e.pageX - $('#canvasDiv').offset().left , e.pageY - $('#canvasDiv').offset().top);   
-});
-
-$('#canvas').mouseup(function(e){
-   mouseMove(e.pageX - $('#canvasDiv').offset().left , e.pageY - $('#canvasDiv').offset().top);
-   downflag = false;
-   sendData(movesArray.toString());
-   movesArray = [];
-});
-
-$('#canvas').mouseleave(function(e){
-   mouseMove(e.pageX - $('#canvasDiv').offset().left , e.pageY - $('#canvasDiv').offset().top);
-   if (downflag)
-   {
-      sendData(movesArray.toString());
-      movesArray = [];
-   }
-   downflag = false;
-});
-
-$('#canvas').mouseenter(function(e){
-   prevx = e.pageX - $('#canvasDiv').offset().left;
-   prevy = e.pageY - $('#canvasDiv').offset().top;
-});
-
-$('#clearBoard').click(function(){
-   var data = {};
-   data["type"] = "clear";
-   var myaray = [];
-   myaray.push(JSON.stringify(data));
-   console.log(JSON.stringify(data));
-   clearCanvas();
-   sendData(myaray); 
-});
-
-$('#setModeDraw').click(function(){
-   mode = 'draw';
-});
-
-$('#setModeErase').click(function(){
-   mode = 'erase';
-});
    
 function mouseDown(xnew , ynew){
    prevx = xnew;
@@ -273,7 +276,7 @@ function mouseMove(xnew , ynew){
          data["type"] = "draw";
          data["coord"] = [prevx , prevy , xnew , ynew ];
          movesArray.push(JSON.stringify(data));
-         console.log(JSON.stringify(data));
+         //console.log(JSON.stringify(data));
          drawLine(prevx , prevy , xnew , ynew);
       }
       else if(mode.localeCompare('erase') == 0){
@@ -282,7 +285,7 @@ function mouseMove(xnew , ynew){
          data["type"] = "erase";
          data["coord"] = [xnew , ynew ];
          movesArray.push(JSON.stringify(data));
-         console.log(JSON.stringify(data));
+         //console.log(JSON.stringify(data));
          clearArea(xnew,ynew);
       }
       
@@ -319,7 +322,5 @@ function clearArea(x,y){
    //console.log(x + " _ " + y);
    clearRectangle(xlow,ylow,wd,hd);
 }
-
-*/
 
 

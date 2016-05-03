@@ -28,6 +28,7 @@ html
         script(type='text/javascript').
             function initRoom(){
             compilerController.init();
+            initCanvas();
             }
         
 
@@ -79,6 +80,13 @@ html
 
                 form.myeditor#codeboard
                     textarea#codeEditor 
+
+                div#canvasDiv
+
+                div#canvasPanel
+                    div#clearBoard Clear
+                    div#setModeDraw Draw
+                    div#setModeErase Erase
 
 
             section#right-col.col.s3.inner-container
