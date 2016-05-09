@@ -33,13 +33,13 @@ html(lang='en')
     link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/theme/monokai.css')
 
       
-  body(onload='Controller.init();')
+  body(onload='compilerController.init();')
     form.myeditor
       textarea#codeEditor
       br
       textarea#inputbox.iobox  input 
       br
-      select#languageMenu(onchange='Controller.changeMode()')
+      select#languageMenu(onchange='compilerController.changeMode()')
         option(value='0')  Text
         option(value='1')  C 
         option(value='2')  C++ 
@@ -51,7 +51,7 @@ html(lang='en')
         option(value='9')  C# 
         option(value='20')  Javascript 
       br
-      button#compileButton(type='button', onclick='Controller.runCode()') Run
+      button#compileButton(type='button', onclick='compilerController.runCode()') Run
       br
       textarea#statusbox(readonly='') Status
       br

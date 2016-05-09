@@ -1,58 +1,76 @@
 // Compatibility shim
 navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 // PeerJS object
-var peer = new Peer({host : location.hostname, port : location.port, path : "/peer", debug: 3});
+
+var peer , MyId = null , flagCaller = false;
 var dataConnection;
 var rec_dataArray = '' , flag = 0;
 var movesArray = [];
 
+function initPeer(){
+  peer = new Peer({host : location.hostname, port : location.port, path : "/peer", debug: 3});
 
-peer.on('open', function () {
-    $('#my-id').text(peer.id);
-});
+  peer.on('open', function () {
+      $('#my-id').text(peer.id);
+      console.log("My id : " + peer.id);
+      MyId = peer.id;
+  });
 
-// Receiving a call
-peer.on('call', function (call) {
-    // Answer the call automatically (instead of prompting user) for demo purposes
-    call.answer(window.localStream);
+  // Receiving a call
+  peer.on('call', function (call) {
+      // Answer the call automatically (instead of prompting user) for demo purposes
+      call.answer(window.localStream);
+      step3(call);
+  });
+
+  peer.on('error', function (err) {
+      alert(err.message);
+      // Return to step 2 if error occurs
+      step2();
+  });
+
+  peer.on('connection', function(conn) {
+      console.log("Data channel connection has been setup " + conn);
+      dataConnection = conn;
+      connectionChanges(conn.peer);
+      //console.log("File id:" + fileId);
+      //console.log("Sending api id");
+      //loadDocument(fileId);
+  });
+
+  $('#make-call').click(function(){
+      
+      callPeer($('#callto-id').val());
+  });
+
+  $('#end-call').click(function () {
+      window.existingCall.close();
+      step2();
+  });
+  // Retry if getUserMedia fails
+  $('#step1-retry').click(function () {
+      $('#step1-error').hide();
+      step1();
+  });
+  // Get things started
+  step1();
+}
+
+
+
+function callPeer(peer1){
+    // Initiate a call!
+    var call = peer.call(peer1 , window.localStream);
+    console.log("Call : ");
+    console.log(call);
     step3(call);
-});
-
-peer.on('error', function (err) {
-    alert(err.message);
-    // Return to step 2 if error occurs
-    step2();
-});
-
-peer.on('connection', function(conn) {
-    console.log("Data channel connection has been setup " + conn);
-    dataConnection = conn;
-    connectionChanges(conn.peer);
-});
-
-// Click handlers setup
-$(function () {
-    $('#make-call').click(function () {
-        // Initiate a call!
-        var call = peer.call($('#callto-id').val(), window.localStream);
-        dataConnection = peer.connect($('#callto-id').val());
-        step3(call);
-        connectionChanges();
-
-    });
-    $('#end-call').click(function () {
-        window.existingCall.close();
-        step2();
-    });
-    // Retry if getUserMedia fails
-    $('#step1-retry').click(function () {
-        $('#step1-error').hide();
-        step1();
-    });
-    // Get things started
-    step1();
-
-});
+    console.log("peer id : " + peer1);
+    dataConnection = peer.connect(peer1);
+    connectionChanges(peer1);
+    flagCaller = true;
+    loadDocument(fileId);
+    // peer1 is same as call.peer
+}
 
 function step1() {
     // Get audio/video stream
@@ -74,9 +92,11 @@ function step2() {
     $('#step1, #step3').hide();
     $('#step2').show();
     console.log($('#video-container').height());
+    connectToPeer();
 }
 
 function step3(call) {
+    console.log("Call : " + call);
     console.log($('#video-container').height());
     // Hang up on an existing call if present
     if (window.existingCall) {
@@ -121,9 +141,10 @@ function createChatBox(){
                           width: 300 ,
                           messageSent: function(id, user, msg){
                                //alert("DOM " + id + " just typed in " + msg);
-                               chat(msg);
+                               channelData("chat" , msg);
                                addMessage("You" , msg);
                           }});
+    console.log("chatBox created");
 }
 
 function addMessage(from,msg){
@@ -150,7 +171,7 @@ function handleData(mssg){
     for (var i = 0; i < arrayLength; i++) {
         //data = JSON.parse(data_collection[i]);
         var data = data_collection[i];
-        //console.log(data["type"]);
+        //console.log("\n\n" + data["type"]);
         //console.log(typeof data);
 
         switch(data["type"]) { 
@@ -163,12 +184,16 @@ function handleData(mssg){
                 break; 
 
             case "chat": 
-                //chatArea.innerHTML += "Peer : " + data["mssg"] + "<br />"; 
                 addMessage("Peer" , data["mssg"]); 
                 break; 
             case "clear": 
                 clearCanvas();  
-                break; 
+                break;
+            case "realtimeApi" :
+                console.log("\n\nFile id received");
+                console.log(data["mssg"]);
+                loadDocument(data["mssg"]);
+                break;
             default: 
                 break; 
         }
@@ -176,18 +201,14 @@ function handleData(mssg){
 
 }
 
-function chat(text){
-    
+function channelData(type , text){
     var data={};
-    data["type"] = "chat";
+    data["type"] = type;
     data["mssg"] = text;
     var myaray = [];
     myaray.push(JSON.stringify(data));
-    //console.log(JSON.stringify(data));
-    //console.log(myaray.toString());
     sendData(myaray); 
 }
-
 
 
 //// initialise canvas
@@ -195,7 +216,7 @@ function chat(text){
 var canvasWidth = 200 , canvasHeight = 320 , canvasDiv , canvas , context;
 
 function initCanvas(){
-    console.log("CALLEDHERE:"+$('#mid-col').width());
+    //console.log("CALLEDHERE:"+$('#mid-col').width());
     canvasDiv = document.getElementById('canvasDiv');
     canvas = document.createElement('canvas');
 
@@ -205,7 +226,7 @@ function initCanvas(){
     canvas.setAttribute('width', $('#mid-col').width());
     canvas.setAttribute('height', canvasHeight);
     canvas.setAttribute('id', 'canvas');
-    console.log("YO");
+    //console.log("YO");
     // canvas.setAttribute('box-sizing','border-box');
     // canvas.setAttribute('style' , 'border:5px solid #fff;');
     canvasDiv.appendChild(canvas);
@@ -331,3 +352,201 @@ function clearArea(x,y){
 }
 
 
+var clientId = '542212596111-2h05ammmko43pgtvhq974ivucp5vokt7.apps.googleusercontent.com';
+var realtimeUtils , fileId = null , connected = false;
+
+function initRealTimeApi(){
+    // Create a new instance of the realtime utility with your client ID.
+    realtimeUtils = new utils.RealtimeUtils({ clientId: clientId });
+    //console.log("here : " + clientId);
+    authorize();
+}
+
+function authorize() {
+    // Attempt to authorize
+    realtimeUtils.authorize(function(response){
+        if(response.error){
+            // Authorization failed because this is the first time the user has used your application,
+            // show the authorize button to prompt them to authorize manually.
+            //console.log("start1");
+            realtimeUtils.authorize( function(response){  start();  } , true );
+        } 
+        else {
+            start();
+        }
+    }, false);
+}
+/*
+function setFileId(id){
+    console.log("id:" + id);
+    fileId = id;
+}
+
+function checkId(){
+    console.log("Fileid: " + fileId);
+}
+
+*/
+
+function start() {
+    if (fileId == null) {
+        var x = null;
+        realtimeUtils.createRealtimeFile('New Quickstart File ' + MyId , function(createResponse) {
+            fileId = createResponse.id;
+            insertPermission(createResponse.id);
+            //console.log(createResponse.id);
+            //setFileId(createResponse.id);
+            //checkId();
+        });
+    } 
+    //checkId();
+}
+
+
+
+/**
+* Insert a new permission.
+*
+* @param {String} fileId ID of the file to insert permission for.
+* @param {String} value User or group e-mail address, domain name or
+*                       {@code null} "default" type.
+* @param {String} type The value "user", "group", "domain" or "default".
+* @param {String} role The value "owner", "writer" or "reader".
+*/
+function insertPermission(fileId) {
+    var body = {
+      'type': "anyone",
+      'role': "writer"
+    };
+    var request = gapi.client.drive.permissions.insert({
+      'fileId': fileId,
+      'resource': body
+    });
+    request.execute(function(resp) { 
+      console.log('File made public!'); 
+      console.log(resp);
+      console.log("File id: " + fileId);
+      initPeer();
+    });
+}
+
+function loadDocument(id){
+    console.log("initiating document loading process , keep patience ");
+    if(connected == false){
+        console.log(id);
+        realtimeUtils.load(id , onFileLoaded , onFileInitialize);
+        connected = true;
+    }
+    else{
+        console.log("Already connected , reload page for new connection");
+    }
+}
+
+// The first time a file is opened, it must be initialized with the
+// document structure. This function will add a collaborative string
+// to our model at the root.
+function onFileInitialize(model) {
+    var string = model.createString();
+    string.setText('Welcome to HackerHire!');
+    model.getRoot().set('demo_string', string);
+
+    if(flagCaller){
+      console.log("Sending api id");
+      channelData("realtimeApi" , fileId);
+    }
+}
+
+// After a file has been initialized and loaded, we can access the
+// document. We will wire up the data model to the UI.
+
+function onFileLoaded(doc) {
+    var collaborativeString = doc.getModel().getRoot().get('demo_string');
+    wireTextBoxes(collaborativeString);
+}
+
+// Connects the text boxes to the collaborative string
+function wireTextBoxes(collaborativeString) {
+    //var textArea = document.getElementById('secondarea');
+    //var area2 = document.getElementById('inputbox');
+    //gapi.drive.realtime.databinding.bindString(collaborativeString, textArea);
+    //gapi.drive.realtime.databinding.bindString(collaborativeString, area2);
+
+    var ignore_change;
+
+    compilerView.myCodeMirror.setValue(collaborativeString.getText());
+
+    ignore_change = false;
+    compilerView.myCodeMirror.on('beforeChange', function(editor , changeObj) {
+
+      var from, text, to;
+      if (ignore_change) {
+        return;
+      }
+
+      from = editor.indexFromPos(changeObj.from);
+      to = editor.indexFromPos(changeObj.to);
+      text = changeObj.text.join('\n');
+
+      if (to - from > 0) {
+
+        //console.log("markdown.removeRange(" + from + ", " + to + ")");
+        collaborativeString.removeRange(from, to);
+
+      }
+      if (text.length > 0) {
+
+        //console.log("markdown.insertString(" + from + ", '" + text + "')");
+        return collaborativeString.insertString(from, text);
+        
+      }
+    });
+
+    collaborativeString.addEventListener(gapi.drive.realtime.EventType.TEXT_INSERTED, function(e) {
+
+      var from;
+      if (e.isLocal) {
+        return;
+      }
+      from = compilerView.myCodeMirror.posFromIndex(e.index);
+      ignore_change = true;
+      //console.log("editor.replaceRange('" + e.text + "', " + (pos2str(from)) + ", " + (pos2str(from)) + ")");
+      compilerView.myCodeMirror.replaceRange(e.text, from, from);
+      return ignore_change = false;
+
+    });
+
+    collaborativeString.addEventListener(gapi.drive.realtime.EventType.TEXT_DELETED, function(e) {
+
+      var from, to;
+      if (e.isLocal) {
+        return;
+      }
+      from = compilerView.myCodeMirror.posFromIndex(e.index);
+      to = compilerView.myCodeMirror.posFromIndex(e.index + e.text.length);
+      ignore_change = true;
+      //console.log("editor.replaceRange('', " + (pos2str(from)) + ", " + (pos2str(to)) + ")");
+      compilerView.myCodeMirror.replaceRange("", from, to);
+      return ignore_change = false;
+
+    });
+
+    console.log("All set for collaboration ! :)");
+
+}
+
+
+function connectToPeer(){
+
+    var url = window.location.href;
+    console.log(url);
+    var id = url.split('?id=')[1];
+    console.log(id);
+    console.log("look here : " + id);
+    if(id === undefined){
+
+    }
+    else{
+        console.log("connecting to peer : " + id);
+        callPeer(id);
+    }
+}

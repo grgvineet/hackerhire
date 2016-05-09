@@ -9,6 +9,7 @@ html
         link(rel='stylesheet',href="https://fonts.googleapis.com/icon?family=Material+Icons")
         link(rel='stylesheet', href='/stylesheets/jquery-ui-1.8.2.custom.css', type='text/css', media='screen')
         link(type='text/css', href='/stylesheets/jquery.ui.chatbox.css', rel='stylesheet')
+        link(href='https://www.gstatic.com/realtime/quickstart-styles.css', rel='stylesheet', type='text/css')
 
         script(type="text/javascript", src="https://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js")
         script(type="text/javascript", src="https://cdnjs.cloudflare.com/ajax/libs/peerjs/0.3.14/peer.js")
@@ -24,11 +25,17 @@ html
         script(src='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/mode/meta.js')
         script(src='https://code.jquery.com/ui/1.10.4/jquery-ui.js', integrity='sha256-tp8VZ4Y9dg702r7D6ynzSavKSwB9zjariSZ4Snurvmw=', crossorigin='anonymous')
         script(type='text/javascript', src='/scripts/jquery.ui.chatbox.js')
+        script(src='https://apis.google.com/js/api.js')
+        script(src='https://www.gstatic.com/realtime/realtime-client-utils.js')
+ 
 
         script(type='text/javascript').
             function initRoom(){
+
             compilerController.init();
             initCanvas();
+            initRealTimeApi();
+            
             }
 
         script(src='/scripts/swapper.js')
@@ -90,7 +97,6 @@ html
                     textarea#codeEditor 
 
                 div#canvasDiv
-
                 
 
 
