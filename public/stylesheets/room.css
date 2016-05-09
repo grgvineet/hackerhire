@@ -28,6 +28,19 @@ nav {
 #mid-col {
   padding: 0;
 }
+#mid-col #canvasDiv {
+  width: 100%;
+}
+#mid-col #canvas {
+  box-sizing: border-box;
+}
+#canvasPanel {
+  display: inline;
+}
+#canvasPanel div {
+  display: inline;
+  background: inherit;
+}
 #swapperDiv {
   width: 100%;
   background-color: #272822;

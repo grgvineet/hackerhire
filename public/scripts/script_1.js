@@ -92,8 +92,8 @@ jQuery(document).ready(function($){
 
 	//Error
 	formLogin.find('input[type="submit"]').on('click', function(event){
-		// event.preventDefault();
-		// formLogin.find('input[type="email"]').toggleClass('has-error').next('span').toggleClass('is-visible');
+		event.preventDefault();
+		formLogin.find('input[type="email"]').toggleClass('has-error').next('span').toggleClass('is-visible');
 		console.log("Pushed");
 	});
 	formSignup.find('input[type="submit"]').on('click', function(event){
@@ -160,6 +160,7 @@ function login_submit_click() {
 				window.location.href = "/dashboard";
 			} else {
 				alert(result.message);
+				// formLogin.find('input[type="email"]').toggleClass('has-error').next('span').toggleClass('is-visible');
 			}
 		}
 	});
@@ -181,6 +182,7 @@ function signup_submit_click() {
 				swal("Good job!", "You clicked the button!", "success");
 			} else {
 				alert(result.message);
+				// formLogin.find('input[type="email"]').toggleClass('has-error').next('span').toggleClass('is-visible');
 			}
 		}
 	});

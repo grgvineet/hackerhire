@@ -192,16 +192,22 @@ function chat(text){
 
 //// initialise canvas
 // Create the canvas (Neccessary for IE because it doesn't know what a canvas element is)
-var canvasWidth = 590 , canvasHeight = 320 , canvasDiv , canvas , context;
+var canvasWidth = 200 , canvasHeight = 320 , canvasDiv , canvas , context;
 
 function initCanvas(){
+    console.log("CALLEDHERE:"+$('#mid-col').width());
     canvasDiv = document.getElementById('canvasDiv');
     canvas = document.createElement('canvas');
 
-    canvas.setAttribute('width', canvasWidth);
+    canvasWidth = $('#mid-col').width();
+    canvasHeight = $('#mid-col').height();
+
+    canvas.setAttribute('width', $('#mid-col').width());
     canvas.setAttribute('height', canvasHeight);
     canvas.setAttribute('id', 'canvas');
-    canvas.setAttribute('style' , 'border:1px solid #000000;');
+    console.log("YO");
+    // canvas.setAttribute('box-sizing','border-box');
+    // canvas.setAttribute('style' , 'border:5px solid #fff;');
     canvasDiv.appendChild(canvas);
     if(typeof G_vmlCanvasManager != 'undefined') {
        canvas = G_vmlCanvasManager.initElement(canvas);
@@ -256,6 +262,7 @@ function initCanvas(){
        mode = 'erase';
     });
 }
+
 // Grab the 2d canvas context
 // Note: The above code is a workaround for IE 8 and lower. Otherwise we could have used:
 //     context = document.getElementById('canvas').getContext("2d");

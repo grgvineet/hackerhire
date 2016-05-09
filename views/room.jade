@@ -15,7 +15,7 @@ html
         script(src='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js')
         script(type="text/javascript", src="/scripts/call_script.js")
         script(src='/scripts/compiler.js')
-        script(src='/scripts/swapper.js')
+        
         script(src='https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js')
         script(src='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/codemirror.js')
         script(src='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/mode/javascript/javascript.js')
@@ -30,6 +30,8 @@ html
             compilerController.init();
             initCanvas();
             }
+
+        script(src='/scripts/swapper.js')
         
 
 
@@ -60,8 +62,9 @@ html
                 div#codepanel
                     span.input-field.col.s6 
                         select#languageMenu(onchange='compilerController.changeMode()')
+                            option(value='0') plaintext
                             option(value='1')  C 
-                            option(value='2',selected)  C++ 
+                            option(value='2')  C++ 
                             option(value='3')  Java 
                             option(value='5')  Python 2 
                             option(value='6')  Perl 
@@ -76,6 +79,11 @@ html
 
             section#mid-col.col.s6.inner-container
                 div#swapperDiv.right-align
+                    div#canvasPanel
+                        div#clearBoard.btn Clear
+                        div#setModeDraw.btn Draw
+                        div#setModeErase.btn Erase
+
                     button#swapButton.waves-effect.light-blue.accent-4.btn.material-icons aspect_ratio
 
                 form.myeditor#codeboard
@@ -83,10 +91,7 @@ html
 
                 div#canvasDiv
 
-                div#canvasPanel
-                    div#clearBoard Clear
-                    div#setModeDraw Draw
-                    div#setModeErase Erase
+                
 
 
             section#right-col.col.s3.inner-container
