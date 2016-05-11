@@ -9,6 +9,8 @@ html
         link(rel='stylesheet',href='/stylesheets/modal.css')
         script(src='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js')
                 title Hackerhire
+        script(src='/scripts/dashboard_main.js')
+
     
     body
         div.navbar-fixed
@@ -18,16 +20,18 @@ html
                     sup ß
                 ul.right.hide-on-med-and-down
                     li
-                        a(href='/signout') signout 
+                        a(href='/logout') signout 
                     li
                         a(href='#') #{user.username}
 
         div.valign-wrapper#start-container.center-align
             div.valign.center-align 
-                a.waves-effect.green.lighten-1.btn-large
+                a#start-interview-button.waves-effect.green.lighten-1.btn-large.modal-trigger(href='#modal1')
                     span Start an Interview
                     i.material-icons.right cloud
+
         div.container#past-interviews
+            h5.blue-text PREVIOUS INTERVIEWS
             table.striped
                 thead
                     tr
@@ -44,10 +48,34 @@ html
                         td= interview[i].datetime
                 - }
 
+        div#modal1.modal
+            div.modal-content
+                h5.blue-text Create HackerHire Room
+                p Enter Candidate information 
+                div.row
+                    form.col.s12
+                        .row
+                            .input-field.col.s6
+                                input#first_name.validate(placeholder='Name ', type='text')
+                                label(for='first_name') CANDIDATE NAME
+                            .input-field.col.s6
+                                input#email.validate(placeholder='Email', type='email')
+                                label(for='email') CANDIDATE EMAIL
+                        .row
+                            .input-field.col.s12
+                                input#profile.validate(placeholder='Profile', type='text')
+                                label(for='email') JOB PROFILE
 
-        ul
-            each val in interview
-                li= val.interviewee,val
+
+
+            div.modal-footer
+                a.modal-action.modal-close.blue-text.btn-flat CREATE ROOM
+                a.modal-action.modal-close.waves-effect.waves-green.btn-flat CANCEL
+
+
+        //- ul
+        //-     each val in interview
+        //-         li= val.interviewee,val
 
 
 
