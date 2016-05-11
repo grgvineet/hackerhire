@@ -4,22 +4,30 @@ html
   head
     link(rel='stylesheet',href='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css')
     link(rel='stylesheet',href='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css')
-    link(rel='stylesheet',href='/stylesheets/index.css')
     link(rel='stylesheet',href='/stylesheets/modal.css')
+    link(rel='stylesheet',href='/stylesheets/index.css')
+
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js')
     script(src='/scripts/script_1.js')
+    script(src='/scripts/script_2.js')
     title HackerHire
   body
 
-    header(role='banner')
-      section#signup.main-nav
-          ul
-            li
-              a.cd-signin(href='#0') LOGIN
-            li
-              a.cd-signup(href='#0') SIGNUP
+
+    div.navbar-fixed
+      nav(role='banner').light-blue.accent-4
+        a#logo
+          span
+            span HackerHire
+            sup ß
+        section#signup.main-nav.nav-wrapper.valign-wrapper
+            ul#signup-ul
+              li
+                a#login-link.cd-signin(href='#0') LOGIN
+              li
+                a#signup-link.cd-signup(href='#0') SIGNUP
 
 
     div.cd-user-modal
@@ -102,7 +110,10 @@ html
 
     div.container
       header
-        h2 HackerHire
+        h2#main-title
+          span
+            span HackerHire
+            sup ß
         p Helping you hire the best talent.
 
       section#preview.outer-section
@@ -147,6 +158,10 @@ html
 
 
     footer.page-footer.grey.darken-4
+      div.container.white-text
+        span A project for the 2016 Web Technologies Lab by &nbsp;
+        span.light-blue-text.accent-4 Sidharth, Vaibhav and Vineet
+
       div.footer-copyright  
         div.container.white-text
           span Copyright &copy; 2016

@@ -20,6 +20,7 @@ main-serif = ''
   h2
     font-family main-coding
     font-size 2em
+    
 
 
 // Sections
@@ -29,18 +30,46 @@ main-serif = ''
 header
   width 100%
   text-align center
+  
   h2
     margin-left 1.5em
     font-family main-coding
     font-weight bold
+    
   p
     font-style italic
     font-size 2em
+    
+#main-title
+  margin-left 0
+    
+// NavBar
+
+nav 
+  #logo
+    font-family main-coding
+    margin-left 1em
+    font-size 130%
+    font-weight bold
+    display none
 
 #signup
   text-align right
-  a
-  li
+  #signup-ul
+    margin 0
+    padding 0
+    line-height 1em
+
+    
+    a 
+      transition all 0.25s ease-in-out
+      background none
+      border none
+      line-height 1em
+    
+    a:hover
+      background #127DBF
+      
     
 #preview
   img
@@ -49,3 +78,4 @@ header
 #clients
   img
     width 100%
+    

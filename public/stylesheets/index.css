@@ -19,10 +19,32 @@ header p {
   font-style: italic;
   font-size: 2em;
 }
+#main-title {
+  margin-left: 0;
+}
+nav #logo {
+  font-family: 'Source Code Pro';
+  margin-left: 1em;
+  font-size: 130%;
+  font-weight: bold;
+  display: none;
+}
 #signup {
   text-align: right;
-a
-li
+}
+#signup #signup-ul {
+  margin: 0;
+  padding: 0;
+  line-height: 1em;
+}
+#signup #signup-ul a {
+  transition: all 0.25s ease-in-out;
+  background: none;
+  border: none;
+  line-height: 1em;
+}
+#signup #signup-ul a:hover {
+  background: #127dbf;
 }
 #preview img {
   width: 100%;
