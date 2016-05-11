@@ -9,9 +9,6 @@ router.get('/', function(req, res) {
 });
 
 router.post('/', function(req, res, next) {
-    console.log(req.body['signup-confirm-password']);
-    console.log(req.body['signup-password']);
-    console.log("YO!");
 
     // Input validation
     if (typeof req.body['signup-username'] === 'undefined' || validator.isNull(req.body['signup-username'])) return res.json( { status : false, message : "Username field is empty" });
@@ -20,7 +17,6 @@ router.post('/', function(req, res, next) {
     else if (typeof req.body['signup-password'] === 'undefined' || validator.isNull(req.body['signup-password'])) return res.json( { status : false, message : "Password field is empty" });
     else if (req.body['signup-confirm-password'] === 'undefined' || validator.isNull(req.body['signup-confirm-password'])) return res.json( { status : false, message : "Confirm password is empty" });
     else if (!validator.equals(req.body['signup-password'], req.body['signup-confirm-password'] )) return res.json( { status : false, message : "Passwords don't match" });
-
 
     passport.authenticate('local-signup', function (err, user, info) {
         if (user !== false) {

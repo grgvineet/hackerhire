@@ -22,6 +22,7 @@ var dashboard = require('./routes/dashboard');
 var signup = require('./routes/signup');
 var compiler = require('./routes/compiler');
 var hackerrank = require('./routes/hackerrank');
+var verify = require('./routes/verify');
 
 var app = express();
 
@@ -94,6 +95,7 @@ app.use('/dashboard', dashboard);
 app.use('/compiler', compiler);
 app.use('/hackerrank' , hackerrank);
 app.use('/peer', require('peer').ExpressPeerServer(server, {debug: true}));
+app.use('/verify', verify);
 app.use('/room2',room2)
 
 
