@@ -20,7 +20,7 @@ $('document').ready(function(){
 
 	// $('.outer-container').css('height',wh-navh);
 	// $('.inner-container').css('height',wh-navh);
-	$('.CodeMirror').css('height',600+'px !important');
+	// $('.CodeMirror').css('height',600+'');
 	$('.outer-container').height(wh-navh);
 	$('.inner-container').height(wh-navh);
 	$('.CodeMirror').height(200);
@@ -34,8 +34,6 @@ $('document').ready(function(){
 	console.log($('#mid-col').width());
 	canvas.attr("width",$('#mid-col').width());
 	canvaspanel.hide();
-	canvasDiv.hide();
-	// canvas.hide();
 	// canvas.attr("class","LOL");
 
 	button.on('click',function(event) {
@@ -43,6 +41,7 @@ $('document').ready(function(){
 		if (codeboard.is(':visible')) {
 			// codeboard.hide();
 			codeboard.slideUp("slow",function(){
+				// canvasDiv.show();
 				canvaspanel.fadeIn();
 				// swapperCont.css("background-color","inherit");
 				// swapperCont.animate({backgroundColor: 'inherit'}, 'slow');
@@ -53,6 +52,7 @@ $('document').ready(function(){
 		else {
 			// swapperCont.css("background-color",backColor);
 			canvaspanel.fadeOut();
+			// canvasDiv.hide();
 			codeboard.slideDown();
 			button.html("aspect_ratio");
 		}

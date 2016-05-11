@@ -18,17 +18,37 @@ html
                     sup ß
                 ul.right.hide-on-med-and-down
                     li
-                        a(href='#') signout 
+                        a(href='/signout') signout 
                     li
-                        a(href='#') sidharth &#x25BC;
+                        a(href='#') #{user.username}
 
         div.valign-wrapper#start-container.center-align
             div.valign.center-align 
                 a.waves-effect.green.lighten-1.btn-large
                     span Start an Interview
                     i.material-icons.right cloud
+        div.container#past-interviews
+            table.striped
+                thead
+                    tr
+                        th S.NO
+                        th Interviewee
+                        th Profile
+                        th Date
 
-        
+                - for( var i = 0, len = interview.length; i < len; i++ ) {
+                      tr
+                        td= i+1
+                        td= interview[i].interviewee
+                        td= interview[i].profile
+                        td= interview[i].datetime
+                - }
+
+
+        ul
+            each val in interview
+                li= val.interviewee,val
+
 
 
 
