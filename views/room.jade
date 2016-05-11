@@ -4,12 +4,12 @@ html
         title Hackerhire
         link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/codemirror.css')
         link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/theme/monokai.css')
+        link(href='https://www.gstatic.com/realtime/quickstart-styles.css', rel='stylesheet', type='text/css')
         link(rel='stylesheet',href='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css')
-        link(rel='stylesheet',href='/stylesheets/room.css')
         link(rel='stylesheet',href="https://fonts.googleapis.com/icon?family=Material+Icons")
         link(rel='stylesheet', href='/stylesheets/jquery-ui-1.8.2.custom.css', type='text/css', media='screen')
         link(type='text/css', href='/stylesheets/jquery.ui.chatbox.css', rel='stylesheet')
-        link(href='https://www.gstatic.com/realtime/quickstart-styles.css', rel='stylesheet', type='text/css')
+        link(rel='stylesheet',href='/stylesheets/room.css')
 
         script(type="text/javascript", src="https://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js")
         script(type="text/javascript", src="https://cdnjs.cloudflare.com/ajax/libs/peerjs/0.3.14/peer.js")
@@ -38,22 +38,19 @@ html
             
             }
 
-        script(src='/scripts/swapper.js')
+        
         
 
 
     body(onload='initRoom();')
         nav
             div.nav-wrapper.light-blue.accent-4
-                a.brand-logo(href='#') HackerHire
+                a.brand-logo(href='#')#main-logo HackerHire
                 ul#nav-mobile.right.hide-on-med-and-down
                     li
-                        a dashboard
-                    li
-                        a jobs
-                    li
-                        a#username(href='#') sidharth &#x25BC;
-                
+                        a.waves-effect.waves-light.btn
+                            span Invite
+
 
         div.row.outer-container
             section#left-col.col.s3.inner-container
@@ -127,6 +124,9 @@ html
                                 a.pure-button.pure-button-error#end-call(href="#") End call
 
                 div#chat_div
+
+
+    script(src='/scripts/swapper.js')
 
 
 

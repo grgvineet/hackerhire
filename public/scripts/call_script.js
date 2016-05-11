@@ -213,7 +213,7 @@ function channelData(type , text){
 
 //// initialise canvas
 // Create the canvas (Neccessary for IE because it doesn't know what a canvas element is)
-var canvasWidth = 200 , canvasHeight = 320 , canvasDiv , canvas , context;
+var canvasWidth = 200 , canvasHeight = 100 , canvasDiv , canvas , context;
 
 function initCanvas(){
     //console.log("CALLEDHERE:"+$('#mid-col').width());
