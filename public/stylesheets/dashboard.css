@@ -3,6 +3,9 @@
   height: 20em;
   width: 100%;
   text-align: center;
-  background: url("../images/pattern.png");
+  background: url("../images/pattern.jpg");
   background-size: cover;
+}
+#start-container div {
+  width: 100%;
 }
