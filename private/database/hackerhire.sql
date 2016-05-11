@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 10, 2016 at 09:16 PM
+-- Generation Time: May 11, 2016 at 07:10 PM
 -- Server version: 5.6.28-0ubuntu0.15.10.1
 -- PHP Version: 5.6.11-1ubuntu3.1
 
@@ -73,7 +73,21 @@ DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(10) unsigned NOT NULL,
   `email` varchar(40) NOT NULL,
-  `password` varchar(60) NOT NULL
+  `password` varchar(60) NOT NULL,
+  `username` varchar(40) NOT NULL,
+  `verified` tinyint(1) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `verificationtokens`
+--
+
+DROP TABLE IF EXISTS `verificationtokens`;
+CREATE TABLE IF NOT EXISTS `verificationtokens` (
+  `email` varchar(40) NOT NULL,
+  `token` char(40) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -104,6 +118,12 @@ ALTER TABLE `sessions`
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `email` (`email`);
+
+--
+-- Indexes for table `verificationtokens`
+--
+ALTER TABLE `verificationtokens`
+  ADD PRIMARY KEY (`email`);
 
 --
 -- AUTO_INCREMENT for dumped tables
