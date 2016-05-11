@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: May 11, 2016 at 07:10 PM
+-- Generation Time: May 11, 2016 at 07:52 PM
 -- Server version: 5.6.28-0ubuntu0.15.10.1
 -- PHP Version: 5.6.11-1ubuntu3.1
 
@@ -31,11 +31,10 @@ USE `hackerhire`;
 DROP TABLE IF EXISTS `interview`;
 CREATE TABLE IF NOT EXISTS `interview` (
   `id` int(11) NOT NULL,
-  `companyname` varchar(40) NOT NULL,
-  `interviewer` text NOT NULL,
+  `userid` int(10) NOT NULL,
+  `profile` text NOT NULL,
   `interviewee` text NOT NULL,
-  `datetime` datetime NOT NULL,
-  `duration` int(11) DEFAULT NULL
+  `datetime` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
