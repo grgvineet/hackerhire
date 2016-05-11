@@ -45,7 +45,18 @@ module.exports = {
         });
 	},
 
-	invite : function(to, token) {
+	invite : function(to, from, peerid, callback) {
+		console.log(callback);
+		var mailOptions = {
+            from: '"Hackerhire " <noreply.hackerhire@gmail.com>', // sender address
+            to: to, // list of receivers
+            subject: 'Interview invite', // Subject line
+            text: 'Hi there,\nYou are invited for interview by ' + from + '. Please click the link https://hackerhire.in:3000/room/?id=' + peerid + '\n\nHackerhire Team' // plaintext body
+        };
+
+        transporter.sendMail(mailOptions, function(error, info){
+        	callback(error, info);
+        });
 
 	}
 }

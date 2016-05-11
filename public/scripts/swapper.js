@@ -59,4 +59,36 @@ $('document').ready(function(){
 		
 	});
 
+	$('#invite').click(function(e) {
+		swal({
+			title: "Invite interviewee",
+			text: "Enter email address:",
+			type: "input",   showCancelButton: true,
+			closeOnConfirm: false,
+			animation: "slide-from-top",
+			inputPlaceholder: "Email" },
+			function(inputValue){
+				if (inputValue === false)
+					return false;
+				if (inputValue === "") {
+					swal.showInputError("Please enter an email!");
+					return false;
+				}
+				$.post("/invite",
+			    {
+			        email: inputValue,
+			        peerid: $('#my-id').text()
+			    },
+			    function(data, status){
+			        if (data.status == false) {
+			        	swal("", data.message, "error");
+			        } else {
+			        	swal("", "Invite sent successfully", "success");
+			        }
+			    });
+			});	
+	});
+
+
+
 })
