@@ -1,4 +1,7 @@
 jQuery(document).ready(function($){
+
+	$('#logo').hide();
+
 	var formModal = $('.cd-user-modal'),
 		formLogin = formModal.find('#cd-login'),
 		formSignup = formModal.find('#cd-signup'),

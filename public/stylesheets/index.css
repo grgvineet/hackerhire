@@ -22,12 +22,11 @@ header p {
 #main-title {
   margin-left: 0;
 }
-nav #logo {
+#logo {
   font-family: 'Source Code Pro';
   margin-left: 1em;
   font-size: 130%;
   font-weight: bold;
-  display: none;
 }
 #signup {
   text-align: right;

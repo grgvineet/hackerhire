@@ -1,21 +1,32 @@
 doctype html
 html
     head
+        script(src='https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js')
+        link(rel='stylesheet',href="https://fonts.googleapis.com/icon?family=Material+Icons")
         link(rel='stylesheet',href='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css')
         link(rel='stylesheet',href='/stylesheets/index.css')
+        link(rel='stylesheet',href='/stylesheets/dashboard.css')
         link(rel='stylesheet',href='/stylesheets/modal.css')
         script(src='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js')
-        script(src='https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js')
-        script(src='/scripts/script_1.js')
-        title $ORGANISATION : Hackerhire
+                title Hackerhire
+    
     body
-        header(role='banner')
-            section#signup.main-nav
-                ul
+        div.navbar-fixed
+            nav(role='banner').light-blue.accent-4.white-text
+                a#logo(style='display:block').brand-logo
+                    span HackerHire
+                    sup ß
+                ul.right.hide-on-med-and-down
                     li
-                        h5 Hackerhire
+                        a(href='#') signout 
                     li
-                        a.cd-signin(href='#0') New
-                    li
-                        a.cd-signup(href='/logout') Sign out
+                        a(href='#') sidharth &#x25BC;
+
+        div.valign-wrapper#start-container.center-align
+            div.valign.center-align YO
+                //- a.waves-effect.waves-light.btn-large
+                //-     span Start an Interview
+                //-     i.material-icons.right cloud
+
+
 
