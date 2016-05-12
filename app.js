@@ -24,6 +24,7 @@ var compiler = require('./routes/compiler');
 var hackerrank = require('./routes/hackerrank');
 var verify = require('./routes/verify');
 var invite = require('./routes/invite');
+var createroom = require('./routes/createroom');
 
 var app = express();
 
@@ -98,6 +99,7 @@ app.use('/hackerrank' , hackerrank);
 app.use('/peer', require('peer').ExpressPeerServer(server, {debug: true}));
 app.use('/verify', verify);
 app.use('/invite', invite);
+app.use('/createroom', createroom);
 app.use('/room2',room2)
 
 

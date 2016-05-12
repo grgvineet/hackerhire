@@ -182,7 +182,6 @@ function signup_submit_click() {
 			if (result.status === true) {
 				// window.location.href = "/dashboard";
 				$('.cd-user-modal').removeClass('is-visible');
-				swal("Good job!", "You clicked the button!", "success");
 			} else {
 				alert(result.message);
 				// formLogin.find('input[type="email"]').toggleClass('has-error').next('span').toggleClass('is-visible');

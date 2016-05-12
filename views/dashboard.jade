@@ -10,6 +10,8 @@ html
         script(src='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js')
                 title Hackerhire
         script(src='/scripts/dashboard_main.js')
+        link(rel='stylesheet',href='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css')
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js')
 
     
     body
@@ -64,12 +66,12 @@ html
                         .row
                             .input-field.col.s12
                                 input#profile.validate(placeholder='Profile', type='text')
-                                label(for='email') JOB PROFILE
+                                label(for='profile') JOB PROFILE
 
 
 
             div.modal-footer
-                a.modal-action.modal-close.blue-text.btn-flat CREATE ROOM
+                a.modal-action.modal-close.blue-text.btn-flat#createroom CREATE ROOM
                 a.modal-action.modal-close.waves-effect.waves-green.btn-flat CANCEL
 
 
