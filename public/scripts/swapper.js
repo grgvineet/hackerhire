@@ -15,6 +15,7 @@ $('document').ready(function(){
 
 	var wh = $(window).height();
 	var navh = $('nav').height();
+	var codeFlag = true;
 
 	console.log(wh+" "+navh);
 
@@ -46,7 +47,7 @@ $('document').ready(function(){
 				// swapperCont.css("background-color","inherit");
 				// swapperCont.animate({backgroundColor: 'inherit'}, 'slow');
 			});
-
+			codeFlag = false;
 			button.html("code");
 		}
 		else {
@@ -54,9 +55,10 @@ $('document').ready(function(){
 			canvaspanel.fadeOut();
 			// canvasDiv.hide();
 			codeboard.slideDown();
+			codeFlag = true;
 			button.html("aspect_ratio");
 		}
-		
+		console.log(codeFlag);
 	});
 
 	$('#invite').click(function(e) {
@@ -88,7 +90,20 @@ $('document').ready(function(){
 			    });
 			});	
 	});
-
-
+	document.getElementById('imageLink').onclick = function() {
+		if(codeFlag){
+			document.getElementById('imageLink').download = 'code.txt';
+			var code = compilerController.getCode();
+		    console.log(code);
+		    this.href = 'data:text/plain;charset=utf-8,'+ encodeURIComponent(code);
+		}
+		else
+		{
+			document.getElementById('imageLink').download = 'whiteBoard.png';
+			var dataURL = canvas.toDataURL('image/png');
+	    	this.href = dataURL;
+		}
+	    
+	  };
 
 })

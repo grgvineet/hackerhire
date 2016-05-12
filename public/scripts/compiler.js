@@ -39,10 +39,7 @@ var compilerController = {
 		
 		var str = " --- Running --- \n";
 		compilerView.setOutput(str);
-		//console.log(myData);
-
-		//var str = '\n\n' + compilerView.getOutput();
-		//compilerView.setOutput(str);
+		channelData("output" , str);
 		$.post({
 			url : sub_url ,
 			dataType: "json",
@@ -56,35 +53,41 @@ var compilerController = {
 	},
 	parseResponse : function(response){
 		
-		//var data = JSON.parse(response);
-		//alert(response);
 		response = JSON.parse(response);
-		//console.log(response);
-		//console.log(response["result"]);
 		var compileMssg = response['result']['compilemessage'];
-		
+		var str = null;
 		if(compileMssg.length > 0)
 		{
 			compilerView.setStatus("Compilation error");
-			var str = 'Compilation error ' + '\n\n';
-			compilerView.setOutput(str);
+			str = 'Compilation error ' + '\n\n';
 		}
 		else
 		{
 			var statusMssg = response['result']['message'];
 			var output = response['result']['stdout'][0];
-			var str = " --- " + statusMssg + " ---\n" + output ;
-			compilerView.setOutput(str);
-			//compilerView.setStatus(statusMssg);
-			//console.log(statusMssg.length);
-			//console.log(output.length);
+			str = " --- " + statusMssg + " ---\n" + output ;
 		}
+		compilerView.setOutput(str);
+		channelData("output" , str);
 	},
 	changeMode : function(){
 		var value = compilerView.getLanguage();
 		var modetype = this.langList[value][1];
 		compilerView.setMode(modetype);
-	}
+		channelData("mode",value);
+	},
+	setMode : function(value){
+		compilerView.setLanguage(value);
+		var modetype = this.langList[value][1];
+		compilerView.setMode(modetype);
+	},
+	setCompilerOutput : function(output){
+		compilerView.setOutput(output);
+	},
+	getCode : function(){
+		return compilerView.getContent();
+	} 
+
 };
 
 var compilerView = {
@@ -113,6 +116,9 @@ var compilerView = {
 	setContent : function(content){
 		$("#codeEditor").val(content);
 	},
+	setLanguage : function(lang){
+		$("#languageMenu").val(lang);
+	},
 	setOutput : function(output){
 		//console.log(output);
 		$("#outputbox").val(output);
@@ -122,7 +128,6 @@ var compilerView = {
 	},
 	setMode : function(modetype){
 		this.myCodeMirror.setOption("mode" , modetype);
-		//CodeMirror.autoLoadMode(this.myCodeMirror , modetype);
 		console.log('mode changed to : ' + modetype);
 	}
 };
